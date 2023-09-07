@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1026638132463-tur6kg5vosle8l3r7t5vkcf81671j2g2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1026638132463-tur6kg5vosle8l3r7t5vkcf81671j2g2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAxHTi-ku69wSY-Dgbveg5T8rXCHR9ZNMU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1026638132463</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.rmit.edu.vn.long.SignIn</string>
+	<key>PROJECT_ID</key>
+	<string>signin-cd655</string>
+	<key>STORAGE_BUCKET</key>
+	<string>signin-cd655.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1026638132463:ios:0052743f50f423fb64571a</string>
+</dict>
+</plist>
