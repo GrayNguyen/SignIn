@@ -45,7 +45,7 @@ struct AppView: View {
                     FavouriteView()
                     
                 case "list.clipboard.fill":
-                    MyRecipeView(recipes: $recipes, isEnglish: isEnglish)
+                    MyRecipeView()
                     
                 default:
                     UserView(user: $user, userViewModel: $userViewModel, isEnglish: $isEnglish)
