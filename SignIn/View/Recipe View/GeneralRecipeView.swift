@@ -10,7 +10,8 @@ import FirebaseStorage
 
 struct GeneralRecipeView: View {
     var recipe: Recipe
-    var userModelView: UserViewModel
+    var userViewModel: UserViewModel
+    var size: CGFloat
     @State private var image: UIImage = UIImage()
     @State private var username: String = ""
     
@@ -18,11 +19,16 @@ struct GeneralRecipeView: View {
         VStack(alignment: .leading){
             Image(uiImage: image)
                 .resizable()
+                .scaledToFill()
+                .frame(width: size, height: size)
                 .cornerRadius(20)
-                .frame(width: 200, height: 200)
+                .padding(.bottom, 10)
             
             Text(recipe.name ?? "")
                 .bold()
+                .frame(maxWidth: size)
+                .fixedSize(horizontal: false, vertical: true)
+                .multilineTextAlignment(.leading)
             
             Text(" by \(username)")
                 .foregroundColor(.secondary)
@@ -31,11 +37,7 @@ struct GeneralRecipeView: View {
         }
         .onAppear{
             retrieveRecipeImage()
-            if let user = userModelView.getUserDataByDocumentID(documentID: recipe.userDocumentID){
-                let firstName = user.firstName ?? ""
-                let lastName = user.lastName ?? ""
-                username = firstName + " " + lastName
-            }
+            username = recipe.getUserName(users: userViewModel.users)
         }
         .padding()
         .navigationBarBackButtonHidden(true)
@@ -72,6 +74,6 @@ struct GeneralRecipeView_Previews: PreviewProvider {
             instructions: ["prepare", "cook", "enjoy"],
             review: [],
             userDocumentID: "Ghngnj6XsqcNUhybGMdc",
-            documentID: Optional("pKlpaclCOCElCisFuan6")), userModelView: UserViewModel())
+            documentID: Optional("pKlpaclCOCElCisFuan6")), userViewModel: UserViewModel(), size: 200.0)
     }
 }

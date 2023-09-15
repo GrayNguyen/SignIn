@@ -24,4 +24,15 @@ struct Recipe: Identifiable, Codable{
     var review: [String]
     var userDocumentID: String
     var documentID: String?
+    
+    func getUserName(users: [User]) -> String {
+        if let user = users.first(where: { $0.documentID == self.userDocumentID }) {
+            let firstName = user.firstName ?? ""
+            let lastName = user.lastName ?? ""
+            return firstName + " " + lastName
+        }
+        return "User not found"
+    }
+
 }
+
