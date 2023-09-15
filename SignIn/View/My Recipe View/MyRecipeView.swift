@@ -11,6 +11,7 @@ struct MyRecipeView: View {
     var recipes: [Recipe]
     var userViewModel: UserViewModel
     var isEnglish: Bool
+    var user: User
     
     @State private var searchText = ""
     
@@ -59,7 +60,7 @@ struct MyRecipeView: View {
                 List {
                     ForEach(searchResults) {recipe in
                         NavigationLink {
-//                            EditRecipeView()
+                            EditRecipeView(isEnglish: isEnglish, user: user, recipeViewModel: <#T##RecipeViewModel#>, editRecipe: )
                         } label: {
                             UserRecipeView(recipe: recipe, userViewModel: userViewModel, size: 100.0)
                         }

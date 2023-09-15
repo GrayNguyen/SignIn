@@ -51,6 +51,7 @@
 		9ECB70E92AA9D818009EC116 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB70E82AA9D818009EC116 /* HomeView.swift */; };
 		9ECB70EF2AAA14C6009EC116 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB70EE2AAA14C6009EC116 /* LandingView.swift */; };
 		A0C494E32AB41C0B0073C67C /* UserRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C494E22AB41C0B0073C67C /* UserRecipeView.swift */; };
+		A0C494E52AB42D340073C67C /* EditRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C494E42AB42D340073C67C /* EditRecipeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,7 @@
 		9ECB70E82AA9D818009EC116 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9ECB70EE2AAA14C6009EC116 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
 		A0C494E22AB41C0B0073C67C /* UserRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRecipeView.swift; sourceTree = "<group>"; };
+		A0C494E42AB42D340073C67C /* EditRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				9E033EC42AAEC9720061E3F6 /* MyRecipeView.swift */,
+				A0C494E42AB42D340073C67C /* EditRecipeView.swift */,
 			);
 			path = "My Recipe View";
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				9ECB70A12AA9CD2D009EC116 /* SignInApp.swift in Sources */,
 				9E033EAF2AAB7A630061E3F6 /* ImagePicker.swift in Sources */,
 				9E016A2B2AB33B9800796D0C /* RecipeList.swift in Sources */,
+				A0C494E52AB42D340073C67C /* EditRecipeView.swift in Sources */,
 				9E44473F2AAB16C900D02BE5 /* FavouriteView.swift in Sources */,
 				9E4447382AAB132D00D02BE5 /* TabBar.swift in Sources */,
 			);
