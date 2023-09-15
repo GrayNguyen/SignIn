@@ -78,6 +78,7 @@ struct AddRecipeView: View {
                         Text("Recipe Name")
                             .font(.system(size: 20))
                             .foregroundColor(.secondary)
+                        // TextField("", text: recipe.name == nil ? recipe.name : "" )
                         
                         TextField("Recipe Name", text: $recipeName)
                             .padding()
@@ -139,8 +140,10 @@ struct AddRecipeView: View {
                                     Button {
                                         ingredients.remove(at: index)
                                     } label: {
-                                        Text("Remove")
+                                        Text("X")
+                                            .bold()
                                             .padding()
+                                            .foregroundColor(.red)
                                             .background(.thinMaterial)
                                             .cornerRadius(10)
                                     }
@@ -176,6 +179,17 @@ struct AddRecipeView: View {
                                         .background(.thinMaterial)
                                         .cornerRadius(10)
                                         .textInputAutocapitalization(.never)
+                                    
+                                    Button {
+                                        instructions.remove(at: index)
+                                    } label: {
+                                        Text("X")
+                                            .bold()
+                                            .padding()
+                                            .foregroundColor(.red)
+                                            .background(.thinMaterial)
+                                            .cornerRadius(10)
+                                    }
                                 }
                             }
                         }
@@ -231,7 +245,6 @@ struct AddRecipeView: View {
                 recipe.ingredients = ingredients
                 recipe.instructions = instructions
                 recipe.userDocumentID = user.documentID ?? ""
-                print(recipe)
                 
                 recipeViewModel.addNewRecipe(recipe: recipe)
                 

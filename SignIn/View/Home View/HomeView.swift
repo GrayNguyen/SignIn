@@ -15,121 +15,137 @@ import SwiftUI
 struct HomeView: View {
     var user: User
     var recipes: [Recipe]
+    var userModelView: UserViewModel
     var isEnglish: Bool
-    @State private var isShowingCategories: Bool = false
+    @State private var isShowingRecommendationList: Bool = false
+    @State private var isShowingROTWList: Bool = false
     
     var body: some View {
         NavigationView {
-            VStack {
+            ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    //MARK: Slogan
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Text(isEnglish ? "Hello \(user.firstName ?? "")" : "Xin chào \(user.firstName ?? "")")
-                            
-                            Spacer()
-                        }
-                        
-                        Text(isEnglish ? "What would you like \nto cook today?" : "Hôm nay bạn muốn \nnấu món gì?")
-                            .font(.system(size: 32))
-                            .bold()
-                    }
-                    .padding(.leading, 5)
-                    
-                    VStack(spacing: 40) {
-                        //MARK: Search bar
-                        SearchBar(isEnglish: isEnglish)
-                        
-                        VStack {
-                            //MARK: Categories
+                    VStack {
+                        //MARK: Slogan
+                        VStack(alignment: .leading, spacing: 10) {
                             HStack {
-                                Text(isEnglish ? "Categories" : "Danh mục")
-                                    .font(.system(size: 24))
-                                    .bold()
+                                Text(isEnglish ? "Hello \(user.firstName ?? "")" : "Xin chào \(user.firstName ?? "")")
                                 
                                 Spacer()
-                                
-                                Button {
-                                    isShowingCategories = true
-                                } label: {
-                                    Text(isEnglish ? "See all" : "Xem thêm")
-                                        .foregroundColor(Color("PrimaryColor"))
+                            }
+                            
+                            Text(isEnglish ? "What would you like \nto cook today?" : "Hôm nay bạn muốn \nnấu món gì?")
+                                .font(.system(size: 32))
+                                .bold()
+                        }
+                        .padding(.leading, 5)
+                        
+                        VStack(spacing: 40) {
+                            //MARK: Search bar
+                            SearchBar(isEnglish: isEnglish)
+                            
+                            VStack {
+                                //MARK: Categories
+                                HStack {
+                                    Text(isEnglish ? "Categories" : "Danh mục")
+                                        .font(.system(size: 24))
                                         .bold()
+                                    
+                                    Spacer()
+                                }
+                                
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 15) {
+                                        ForEach(Category.categories) { category in
+                                            CategoryButton(isEnglish: isEnglish, category: category, width: 100)
+                                        }
+                                    }
+                                    .padding(.leading, 1)
+                                    .padding(.vertical, 2)
                                 }
                             }
                             
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 15) {
-                                    ForEach(Category.categories) { category in
-                                        CategoryButton(isEnglish: isEnglish, category: category, width: 100)
+                            //MARK: Recommendation
+                            VStack(spacing: 10) {
+                                HStack {
+                                    Text(isEnglish ? "Recommendation" : "Gợi ý")
+                                        .font(.system(size: 24))
+                                        .bold()
+                                    
+                                    Spacer()
+                                    
+                                    Button {
+                                        isShowingRecommendationList = true
+                                    } label: {
+                                        Text(isEnglish ? "See all" : "Xem thêm")
+                                            .foregroundColor(Color("PrimaryColor"))
+                                            .bold()
+                                    }
+                                    .background{
+                                        NavigationLink("", destination: RecipeList(recipes: recipes, englishTitle: "Recommendation", vietnameseTitle: "Gợi ý", userViewModel: userModelView, isEnglish: isEnglish), isActive: $isShowingRecommendationList)
                                     }
                                 }
-                                .padding(.leading, 1)
-                                .padding(.vertical, 2)
-                            }
-                        }
-                        
-                        //MARK: Recommendation
-                        VStack(spacing: 10) {
-                            HStack {
-                                Text(isEnglish ? "Recommendation" : "Gợi ý")
-                                    .font(.system(size: 24))
-                                    .bold()
                                 
-                                Spacer()
-                                
-                                Button {
-                                    
-                                } label: {
-                                    Text(isEnglish ? "See all" : "Xem thêm")
-                                        .foregroundColor(Color("PrimaryColor"))
-                                        .bold()
+                                ScrollView(.horizontal, showsIndicators: false){
+                                    HStack{
+                                        ForEach(recipes) {recipe in
+                                            GeneralRecipeView(recipe: recipe, userViewModel: userModelView, size: 200.0)
+                                        }
+                                    }
                                 }
                             }
-                        }
-                        
-                        //MARK: Recipes of the week
-                        VStack(spacing: 10) {
-                            HStack {
-                                Text(isEnglish ? "Recipes Of The Week" : "Các món ăn của tuần")
-                                    .font(.system(size: 24))
-                                    .bold()
-                                
-                                Spacer()
-                                
-                                Button {
-                                    
-                                } label: {
-                                    Text(isEnglish ? "See all" : "Xem thêm")
-                                        .foregroundColor(Color("PrimaryColor"))
+                            
+                            //MARK: Recipes of the week
+                            VStack(spacing: 10) {
+                                HStack {
+                                    Text(isEnglish ? "Recipes Of The Week" : "Món ăn của tuần")
+                                        .font(.system(size: 24))
                                         .bold()
+                                    
+                                    Spacer()
+                                    
+                                    Button {
+                                        isShowingROTWList = true
+                                    } label: {
+                                        Text(isEnglish ? "See all" : "Xem thêm")
+                                            .foregroundColor(Color("PrimaryColor"))
+                                            .bold()
+                                    }
+                                    .background{
+                                        NavigationLink("", destination: RecipeList(recipes: recipes, englishTitle: "Recipe of The Week", vietnameseTitle: "Món ăn của tuần", userViewModel: userModelView, isEnglish: isEnglish), isActive: $isShowingROTWList)
+                                    }
+                                }
+                                
+                                ScrollView(.horizontal, showsIndicators: false){
+                                    HStack{
+                                        ForEach(recipes) {recipe in
+                                            GeneralRecipeView(recipe: recipe, userViewModel: userModelView, size: 200.0)
+                                        }
+                                    }
                                 }
                             }
-                        }
-                        
-                        //MARK: Recently viewed
-                        VStack(spacing: 10) {
-                            HStack {
-                                Text(isEnglish ? "History Viewed" : "Đã xem")
-                                    .font(.system(size: 24))
-                                    .bold()
-                                
-                                Spacer()
-                                
-                                Button {
-                                    
-                                } label: {
-                                    Text(isEnglish ? "See all" : "Xem thêm")
-                                        .foregroundColor(Color("PrimaryColor"))
+                            
+                            //MARK: Recently viewed
+                            VStack(spacing: 10) {
+                                HStack {
+                                    Text(isEnglish ? "History Viewed" : "Đã xem")
+                                        .font(.system(size: 24))
                                         .bold()
+                                    
+                                    Spacer()
+                                    
+                                    Button {
+                                        
+                                    } label: {
+                                        Text(isEnglish ? "See all" : "Xem thêm")
+                                            .foregroundColor(Color("PrimaryColor"))
+                                            .bold()
+                                    }
                                 }
                             }
                         }
                     }
+                    .padding(.horizontal, 15)
                 }
-                .padding(.horizontal, 15)
-                
-                Spacer()
             }
             .background(Color.gray.opacity(0.2))
         }
@@ -152,6 +168,7 @@ struct HomeView_Previews: PreviewProvider {
             documentID: ""
         ),
         recipes: [],
+        userModelView: UserViewModel(),
         isEnglish: true)
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		431C8B712AB419F0002F92B7 /* RecipeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431C8B702AB419F0002F92B7 /* RecipeList.swift */; };
 		432FFACE2AB309E700E011A9 /* MyRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432FFACD2AB309E700E011A9 /* MyRecipeView.swift */; };
 		9E033EAD2AAB776A0061E3F6 /* UploadAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E033EAC2AAB776A0061E3F6 /* UploadAvatar.swift */; };
 		9E033EAF2AAB7A630061E3F6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E033EAE2AAB7A630061E3F6 /* ImagePicker.swift */; };
@@ -69,6 +70,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		431C8B702AB419F0002F92B7 /* RecipeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeList.swift; sourceTree = "<group>"; };
 		432FFACD2AB309E700E011A9 /* MyRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecipeView.swift; sourceTree = "<group>"; };
 		9E033EAC2AAB776A0061E3F6 /* UploadAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAvatar.swift; sourceTree = "<group>"; };
 		9E033EAE2AAB7A630061E3F6 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			children = (
 				9E44472D2AAB0C6900D02BE5 /* SearchBar.swift */,
 				9E4447352AAB0E7E00D02BE5 /* CategoryButton.swift */,
+				431C8B702AB419F0002F92B7 /* RecipeList.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				9ECB70EF2AAA14C6009EC116 /* LandingView.swift in Sources */,
 				9ECB70DE2AA9D15D009EC116 /* SignUpView.swift in Sources */,
 				9E033EC22AADF3EA0061E3F6 /* UploadImage.swift in Sources */,
+				431C8B712AB419F0002F92B7 /* RecipeList.swift in Sources */,
 				9E4447292AAAE1E000D02BE5 /* RecipeModelView.swift in Sources */,
 				9E4447462AAB189300D02BE5 /* UserView.swift in Sources */,
 				9E4447272AAAE19500D02BE5 /* Recipe.swift in Sources */,
