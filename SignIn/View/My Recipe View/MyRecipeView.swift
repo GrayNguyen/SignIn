@@ -8,45 +8,81 @@
 import SwiftUI
 
 struct MyRecipeView: View {
-    @Binding var recipes: [Recipe]
+    var recipes: [Recipe]
+    var userViewModel: UserViewModel
     var isEnglish: Bool
     
+    @State private var searchText = ""
+    
     var body: some View {
-        VStack{
-            SearchBar(isEnglish: isEnglish)
-                .padding(.horizontal, 15)
+//        VStack{
+//            SearchBar(isEnglish: isEnglish)
+//                .padding(.horizontal, 15)
             
-            HStack(alignment: .top, spacing: 20){
-                Spacer()
+//            HStack(alignment: .top, spacing: 20){
+//                Spacer()
+//
+//                VStack(alignment: .leading){
+//                    Text("My Recipes")
+//                        .font(.title2)
+//                        .bold()
+//
+//                    ForEach(0..<Category.categories.count, id: \.self) { index in
+//                        if index % 2 == 0 {
+//                            UserRecipeView(recipe: recipes[index], userViewModel: userViewModel, size: 150.0)
+//                        }
+//                    }
+//                }
+//
+//                VStack {
+//                    ForEach(0..<Category.categories.count, id: \.self) { index in
+//                        if index % 2 == 1{
+//                            UserRecipeView(recipe: recipes[index], userViewModel: userViewModel, size: 150.0)
+//                        }
+//                    }
+//                }
+//
+//                Spacer()
+//            }
+//
+//
+//            .background(Color.gray.opacity(0.2))
+//            .navigationBarBackButtonHidden(true)
+            
+//        }
+        
+        NavigationView {
+            ZStack {
+                Color.gray.opacity(0.2)
+                    .edgesIgnoringSafeArea(.all)
                 
-                VStack(alignment: .leading){
-                    Text("My Recipes")
-                        .font(.title2)
-                        .bold()
-                    
-                    ForEach(0..<Category.categories.count, id: \.self) { index in
-                        if index % 2 == 0 {
+                List {
+                    ForEach(searchResults) {recipe in
+                        NavigationLink {
+//                            EditRecipeView()
+                        } label: {
+                            UserRecipeView(recipe: recipe, userViewModel: userViewModel, size: 100.0)
                         }
                     }
                 }
-                
-                VStack {
-                    ForEach(0..<Category.categories.count, id: \.self) { index in
-                        if index % 2 == 1{
-                        }
-                    }
-                }
-                
-                Spacer()
+                .navigationTitle("Your Recipes")
             }
-            .background(Color.gray.opacity(0.2))
-            .navigationBarBackButtonHidden(true)
+        }
+        .searchable(text: $searchText)
+    }
+    
+    var searchResults: [Recipe] {
+        if searchText.isEmpty {
+            return recipes
+        } else {
+            return recipes.filter { $0.name!.contains(searchText) }
         }
     }
+
 }
 
 struct MyRecipeView_Previews: PreviewProvider {
     static var previews: some View {
-        MyRecipeView(recipes: .constant([]), isEnglish: true)
+        MyRecipeView(recipes: [], userViewModel: UserViewModel(), isEnglish: true)
     }
 }

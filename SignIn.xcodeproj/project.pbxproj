@@ -50,6 +50,7 @@
 		9ECB70E72AA9D690009EC116 /* UserModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB70E62AA9D690009EC116 /* UserModelView.swift */; };
 		9ECB70E92AA9D818009EC116 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB70E82AA9D818009EC116 /* HomeView.swift */; };
 		9ECB70EF2AAA14C6009EC116 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB70EE2AAA14C6009EC116 /* LandingView.swift */; };
+		A0C494E32AB41C0B0073C67C /* UserRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C494E22AB41C0B0073C67C /* UserRecipeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		9ECB70E62AA9D690009EC116 /* UserModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModelView.swift; sourceTree = "<group>"; };
 		9ECB70E82AA9D818009EC116 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9ECB70EE2AAA14C6009EC116 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
+		A0C494E22AB41C0B0073C67C /* UserRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRecipeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				9E4447412AAB186100D02BE5 /* GeneralRecipeView.swift */,
+				A0C494E22AB41C0B0073C67C /* UserRecipeView.swift */,
 			);
 			path = "Recipe View";
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				9E4447462AAB189300D02BE5 /* UserView.swift in Sources */,
 				9E4447272AAAE19500D02BE5 /* Recipe.swift in Sources */,
 				9E44473C2AAB163900D02BE5 /* AppView.swift in Sources */,
+				A0C494E32AB41C0B0073C67C /* UserRecipeView.swift in Sources */,
 				9E033EC02AAD91770061E3F6 /* Ingredient.swift in Sources */,
 				9E4447342AAB0E0900D02BE5 /* Category.swift in Sources */,
 				9E44472E2AAB0C6900D02BE5 /* SearchBar.swift in Sources */,
