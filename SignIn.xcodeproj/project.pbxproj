@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		431C8B712AB419F0002F92B7 /* RecipeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431C8B702AB419F0002F92B7 /* RecipeList.swift */; };
 		432FFACE2AB309E700E011A9 /* MyRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432FFACD2AB309E700E011A9 /* MyRecipeView.swift */; };
+		4390D73A2AB5A1AC00E28839 /* BioAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390D7392AB5A1AC00E28839 /* BioAuthView.swift */; };
+		4390D73B2AB5A1AC00E28839 /* BioAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390D7392AB5A1AC00E28839 /* BioAuthView.swift */; };
+		4390D73C2AB5A1AC00E28839 /* BioAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390D7392AB5A1AC00E28839 /* BioAuthView.swift */; };
 		9E033EAD2AAB776A0061E3F6 /* UploadAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E033EAC2AAB776A0061E3F6 /* UploadAvatar.swift */; };
 		9E033EAF2AAB7A630061E3F6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E033EAE2AAB7A630061E3F6 /* ImagePicker.swift */; };
 		9E033EB22AAD69960061E3F6 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E033EB12AAD69960061E3F6 /* SettingView.swift */; };
@@ -72,6 +75,8 @@
 /* Begin PBXFileReference section */
 		431C8B702AB419F0002F92B7 /* RecipeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeList.swift; sourceTree = "<group>"; };
 		432FFACD2AB309E700E011A9 /* MyRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecipeView.swift; sourceTree = "<group>"; };
+		4390D7372AB5A09400E28839 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4390D7392AB5A1AC00E28839 /* BioAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioAuthView.swift; sourceTree = "<group>"; };
 		9E033EAC2AAB776A0061E3F6 /* UploadAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAvatar.swift; sourceTree = "<group>"; };
 		9E033EAE2AAB7A630061E3F6 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		9E033EB12AAD69960061E3F6 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -149,6 +154,14 @@
 				432FFACD2AB309E700E011A9 /* MyRecipeView.swift */,
 			);
 			path = "My Recipe View";
+			sourceTree = "<group>";
+		};
+		4390D7382AB5A18B00E28839 /* BioAuth */ = {
+			isa = PBXGroup;
+			children = (
+				4390D7392AB5A1AC00E28839 /* BioAuthView.swift */,
+			);
+			path = BioAuth;
 			sourceTree = "<group>";
 		};
 		9E033EB02AAB80030061E3F6 /* Component */ = {
@@ -276,7 +289,9 @@
 		9ECB709F2AA9CD2D009EC116 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				4390D7372AB5A09400E28839 /* Info.plist */,
 				9ECB70A02AA9CD2D009EC116 /* SignInApp.swift */,
+				4390D7382AB5A18B00E28839 /* BioAuth */,
 				9ECB70E52AA9D67A009EC116 /* View */,
 				9ECB70E42AA9D673009EC116 /* ModelView */,
 				9ECB70E12AA9D581009EC116 /* Model */,
@@ -508,6 +523,7 @@
 				9E4447272AAAE19500D02BE5 /* Recipe.swift in Sources */,
 				9E44473C2AAB163900D02BE5 /* AppView.swift in Sources */,
 				9E033EC02AAD91770061E3F6 /* Ingredient.swift in Sources */,
+				4390D73A2AB5A1AC00E28839 /* BioAuthView.swift in Sources */,
 				9E4447342AAB0E0900D02BE5 /* Category.swift in Sources */,
 				9E44472E2AAB0C6900D02BE5 /* SearchBar.swift in Sources */,
 				9E4447362AAB0E7E00D02BE5 /* CategoryButton.swift in Sources */,
@@ -528,6 +544,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ECB70B22AA9CD30009EC116 /* SignInTests.swift in Sources */,
+				4390D73B2AB5A1AC00E28839 /* BioAuthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +554,7 @@
 			files = (
 				9ECB70BE2AA9CD30009EC116 /* SignInUITestsLaunchTests.swift in Sources */,
 				9ECB70BC2AA9CD30009EC116 /* SignInUITests.swift in Sources */,
+				4390D73C2AB5A1AC00E28839 /* BioAuthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +699,8 @@
 				DEVELOPMENT_TEAM = JN5Y3P23YK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SignIn/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use this to unclock the phone";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -710,6 +730,8 @@
 				DEVELOPMENT_TEAM = JN5Y3P23YK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SignIn/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use this to unclock the phone";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
