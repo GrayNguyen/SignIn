@@ -8,16 +8,21 @@
 import SwiftUI
 
 struct RecipeList: View {
+    var user: User
     var recipes: [Recipe]
     var englishTitle: String
     var vietnameseTitle: String
     var userViewModel: UserViewModel
     var isEnglish: Bool
+    @State private var isShowingFilter: Bool = false
+    @State private var onSearchTap: Bool = false
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack {
-                SearchBar(isEnglish: isEnglish)
+                NavigationLink(destination: SearchView(isEnglish: isEnglish, user: user, userModelView: userViewModel), isActive: $onSearchTap) {
+                    SearchBarDummy(isEnglish: isEnglish, isShowingFilter: $isShowingFilter, onSearchTap: $onSearchTap)
+                }
                 
                 HStack(alignment: .top, spacing: 5){
                     VStack(alignment: .leading){
@@ -52,6 +57,17 @@ struct RecipeList: View {
 
 struct RecipeList_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeList(recipes: [], englishTitle: "", vietnameseTitle: "", userViewModel: UserViewModel(), isEnglish: false)
+        RecipeList(user: User(
+            firstName: "",
+            lastName: "",
+            dob: "",
+            gender: "",
+            email: "",
+            phone: "",
+            address: "",
+            favourite: [],
+            avatar: "",
+            documentID: ""
+        ), recipes: [], englishTitle: "", vietnameseTitle: "", userViewModel: UserViewModel(), isEnglish: false)
     }
 }

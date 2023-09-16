@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		431C8B712AB419F0002F92B7 /* RecipeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431C8B702AB419F0002F92B7 /* RecipeList.swift */; };
 		432FFACE2AB309E700E011A9 /* MyRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432FFACD2AB309E700E011A9 /* MyRecipeView.swift */; };
+		4390D73A2AB5A1AC00E28839 /* BioAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390D7392AB5A1AC00E28839 /* BioAuthView.swift */; };
+		4390D73B2AB5A1AC00E28839 /* BioAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390D7392AB5A1AC00E28839 /* BioAuthView.swift */; };
+		4390D73C2AB5A1AC00E28839 /* BioAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390D7392AB5A1AC00E28839 /* BioAuthView.swift */; };
+		87BBDA742AB712810086072A /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BBDA732AB712810086072A /* SearchBar.swift */; };
+		87BBDA762AB7129C0086072A /* RecipeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BBDA752AB7129C0086072A /* RecipeRow.swift */; };
+		87BBDA782AB713520086072A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BBDA772AB713520086072A /* SearchView.swift */; };
+		87BBDA7C2AB713C10086072A /* FilterSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BBDA7B2AB713C10086072A /* FilterSearchView.swift */; };
+		87BBDA7F2AB715EF0086072A /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BBDA7E2AB715EF0086072A /* RangeSlider.swift */; };
 		9E033EAD2AAB776A0061E3F6 /* UploadAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E033EAC2AAB776A0061E3F6 /* UploadAvatar.swift */; };
 		9E033EAF2AAB7A630061E3F6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E033EAE2AAB7A630061E3F6 /* ImagePicker.swift */; };
 		9E033EB22AAD69960061E3F6 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E033EB12AAD69960061E3F6 /* SettingView.swift */; };
@@ -20,7 +28,7 @@
 		9E033EC22AADF3EA0061E3F6 /* UploadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E033EC12AADF3EA0061E3F6 /* UploadImage.swift */; };
 		9E4447272AAAE19500D02BE5 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4447262AAAE19500D02BE5 /* Recipe.swift */; };
 		9E4447292AAAE1E000D02BE5 /* RecipeModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4447282AAAE1E000D02BE5 /* RecipeModelView.swift */; };
-		9E44472E2AAB0C6900D02BE5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E44472D2AAB0C6900D02BE5 /* SearchBar.swift */; };
+		9E44472E2AAB0C6900D02BE5 /* SearchBarDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E44472D2AAB0C6900D02BE5 /* SearchBarDummy.swift */; };
 		9E4447302AAB0D8000D02BE5 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E44472F2AAB0D8000D02BE5 /* TabBarButton.swift */; };
 		9E4447342AAB0E0900D02BE5 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4447332AAB0E0900D02BE5 /* Category.swift */; };
 		9E4447362AAB0E7E00D02BE5 /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4447352AAB0E7E00D02BE5 /* CategoryButton.swift */; };
@@ -72,6 +80,13 @@
 /* Begin PBXFileReference section */
 		431C8B702AB419F0002F92B7 /* RecipeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeList.swift; sourceTree = "<group>"; };
 		432FFACD2AB309E700E011A9 /* MyRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecipeView.swift; sourceTree = "<group>"; };
+		4390D7372AB5A09400E28839 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4390D7392AB5A1AC00E28839 /* BioAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioAuthView.swift; sourceTree = "<group>"; };
+		87BBDA732AB712810086072A /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		87BBDA752AB7129C0086072A /* RecipeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRow.swift; sourceTree = "<group>"; };
+		87BBDA772AB713520086072A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		87BBDA7B2AB713C10086072A /* FilterSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSearchView.swift; sourceTree = "<group>"; };
+		87BBDA7E2AB715EF0086072A /* RangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 		9E033EAC2AAB776A0061E3F6 /* UploadAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAvatar.swift; sourceTree = "<group>"; };
 		9E033EAE2AAB7A630061E3F6 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		9E033EB12AAD69960061E3F6 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -83,7 +98,7 @@
 		9E033EC12AADF3EA0061E3F6 /* UploadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImage.swift; sourceTree = "<group>"; };
 		9E4447262AAAE19500D02BE5 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		9E4447282AAAE1E000D02BE5 /* RecipeModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModelView.swift; sourceTree = "<group>"; };
-		9E44472D2AAB0C6900D02BE5 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		9E44472D2AAB0C6900D02BE5 /* SearchBarDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarDummy.swift; sourceTree = "<group>"; };
 		9E44472F2AAB0D8000D02BE5 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		9E4447332AAB0E0900D02BE5 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		9E4447352AAB0E7E00D02BE5 /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
@@ -151,6 +166,49 @@
 			path = "My Recipe View";
 			sourceTree = "<group>";
 		};
+		4390D7382AB5A18B00E28839 /* BioAuth */ = {
+			isa = PBXGroup;
+			children = (
+				4390D7392AB5A1AC00E28839 /* BioAuthView.swift */,
+			);
+			path = BioAuth;
+			sourceTree = "<group>";
+		};
+		87BBDA722AB712340086072A /* Search View */ = {
+			isa = PBXGroup;
+			children = (
+				87BBDA792AB713920086072A /* Component */,
+				87BBDA772AB713520086072A /* SearchView.swift */,
+			);
+			path = "Search View";
+			sourceTree = "<group>";
+		};
+		87BBDA792AB713920086072A /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				87BBDA732AB712810086072A /* SearchBar.swift */,
+				87BBDA752AB7129C0086072A /* RecipeRow.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		87BBDA7A2AB713A90086072A /* Filter Search */ = {
+			isa = PBXGroup;
+			children = (
+				87BBDA7D2AB715D60086072A /* Component */,
+				87BBDA7B2AB713C10086072A /* FilterSearchView.swift */,
+			);
+			path = "Filter Search";
+			sourceTree = "<group>";
+		};
+		87BBDA7D2AB715D60086072A /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				87BBDA7E2AB715EF0086072A /* RangeSlider.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		9E033EB02AAB80030061E3F6 /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,7 +261,7 @@
 		9E44472C2AAB0C5400D02BE5 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				9E44472D2AAB0C6900D02BE5 /* SearchBar.swift */,
+				9E44472D2AAB0C6900D02BE5 /* SearchBarDummy.swift */,
 				9E4447352AAB0E7E00D02BE5 /* CategoryButton.swift */,
 				431C8B702AB419F0002F92B7 /* RecipeList.swift */,
 			);
@@ -276,7 +334,9 @@
 		9ECB709F2AA9CD2D009EC116 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				4390D7372AB5A09400E28839 /* Info.plist */,
 				9ECB70A02AA9CD2D009EC116 /* SignInApp.swift */,
+				4390D7382AB5A18B00E28839 /* BioAuth */,
 				9ECB70E52AA9D67A009EC116 /* View */,
 				9ECB70E42AA9D673009EC116 /* ModelView */,
 				9ECB70E12AA9D581009EC116 /* Model */,
@@ -335,6 +395,8 @@
 		9ECB70E52AA9D67A009EC116 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				87BBDA7A2AB713A90086072A /* Filter Search */,
+				87BBDA722AB712340086072A /* Search View */,
 				432FFACC2AB309CF00E011A9 /* My Recipe View */,
 				9E44472A2AAB0C0E00D02BE5 /* Sign In | Sign Up */,
 				9E4447392AAB161800D02BE5 /* App View */,
@@ -497,9 +559,11 @@
 				9E033EB42AAD7E100061E3F6 /* AddRecipeView.swift in Sources */,
 				9ECB70E72AA9D690009EC116 /* UserModelView.swift in Sources */,
 				9E033EB22AAD69960061E3F6 /* SettingView.swift in Sources */,
+				87BBDA742AB712810086072A /* SearchBar.swift in Sources */,
 				9E4447302AAB0D8000D02BE5 /* TabBarButton.swift in Sources */,
 				9ECB70A32AA9CD2D009EC116 /* SignInView.swift in Sources */,
 				9ECB70EF2AAA14C6009EC116 /* LandingView.swift in Sources */,
+				87BBDA782AB713520086072A /* SearchView.swift in Sources */,
 				9ECB70DE2AA9D15D009EC116 /* SignUpView.swift in Sources */,
 				9E033EC22AADF3EA0061E3F6 /* UploadImage.swift in Sources */,
 				431C8B712AB419F0002F92B7 /* RecipeList.swift in Sources */,
@@ -508,17 +572,21 @@
 				9E4447272AAAE19500D02BE5 /* Recipe.swift in Sources */,
 				9E44473C2AAB163900D02BE5 /* AppView.swift in Sources */,
 				9E033EC02AAD91770061E3F6 /* Ingredient.swift in Sources */,
+				4390D73A2AB5A1AC00E28839 /* BioAuthView.swift in Sources */,
 				9E4447342AAB0E0900D02BE5 /* Category.swift in Sources */,
-				9E44472E2AAB0C6900D02BE5 /* SearchBar.swift in Sources */,
+				9E44472E2AAB0C6900D02BE5 /* SearchBarDummy.swift in Sources */,
 				9E4447362AAB0E7E00D02BE5 /* CategoryButton.swift in Sources */,
 				9E033EBE2AAD90410061E3F6 /* IngredientPicker.swift in Sources */,
 				9E4447422AAB186100D02BE5 /* GeneralRecipeView.swift in Sources */,
 				9ECB70E32AA9D590009EC116 /* User.swift in Sources */,
+				87BBDA7F2AB715EF0086072A /* RangeSlider.swift in Sources */,
 				432FFACE2AB309E700E011A9 /* MyRecipeView.swift in Sources */,
+				87BBDA762AB7129C0086072A /* RecipeRow.swift in Sources */,
 				9E033EB82AAD86B00061E3F6 /* SelectButton.swift in Sources */,
 				9ECB70A12AA9CD2D009EC116 /* SignInApp.swift in Sources */,
 				9E033EAF2AAB7A630061E3F6 /* ImagePicker.swift in Sources */,
 				9E44473F2AAB16C900D02BE5 /* FavouriteView.swift in Sources */,
+				87BBDA7C2AB713C10086072A /* FilterSearchView.swift in Sources */,
 				9E4447382AAB132D00D02BE5 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,6 +596,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ECB70B22AA9CD30009EC116 /* SignInTests.swift in Sources */,
+				4390D73B2AB5A1AC00E28839 /* BioAuthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +606,7 @@
 			files = (
 				9ECB70BE2AA9CD30009EC116 /* SignInUITestsLaunchTests.swift in Sources */,
 				9ECB70BC2AA9CD30009EC116 /* SignInUITests.swift in Sources */,
+				4390D73C2AB5A1AC00E28839 /* BioAuthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +751,8 @@
 				DEVELOPMENT_TEAM = JN5Y3P23YK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SignIn/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use this to unclock the phone";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -710,6 +782,8 @@
 				DEVELOPMENT_TEAM = JN5Y3P23YK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SignIn/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use this to unclock the phone";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

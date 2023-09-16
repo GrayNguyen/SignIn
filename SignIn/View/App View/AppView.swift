@@ -39,7 +39,7 @@ struct AppView: View {
             Group {
                 switch selectedTab {
                 case "house.fill":
-                    HomeView(user: user, recipes: recipes, isEnglish: isEnglish)
+                    HomeView(user: user, recipes: recipes, userModelView: userViewModel, isEnglish: isEnglish)
                     
                 case "heart.fill":
                     FavouriteView()
