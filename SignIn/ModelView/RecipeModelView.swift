@@ -155,5 +155,89 @@ class RecipeViewModel: ObservableObject {
             completion(nil)
         }
     }
+    
+    func searchRecipe(key: String, category: String, minMakingTime: Int, maxMakingTime: Int) {
+        self.recipes = [Recipe]()
+        // Retrieve the "users" document
+        if (category == "None") {
+            db.collection("recipes").whereField("keyword", arrayContains: key).whereField("makingTime", isGreaterThan: minMakingTime).whereField("makingTime", isLessThan: maxMakingTime).addSnapshotListener { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents")
+                    return
+                }
+                
+                let newRecipes = documents.compactMap { (queryDocumentSnapshot) -> Recipe? in
+                    let data = queryDocumentSnapshot.data()
+                    
+                    // Parse recipe data
+                    let name = data["name"] as? String ?? ""
+                    let image = data["image"] as? String ?? ""
+                    let makingTime = data["makingTime"] as? Int ?? 0
+                    let category = data["category"] as? String ?? ""
+                    let description = data["description"] as? String ?? ""
+                    let ingredients = data["ingredients"] as? [String] ?? []
+                    let instructions = data["instructions"] as? [String] ?? []
+                    let review = data["review"] as? [String] ?? []
+                    let userDocumentID = data["userDocumentID"] as? String ?? ""
+                    
+                    // Create a Recipe object
+                    return Recipe(
+                        name: name,
+                        image: image,
+                        makingTime: makingTime,
+                        category: category,
+                        description: description,
+                        ingredients: ingredients,
+                        instructions: instructions,
+                        review: review,
+                        userDocumentID: userDocumentID,
+                        documentID: queryDocumentSnapshot.documentID
+                    )
+                }
+                
+                // Update the recipes array
+                self.recipes = newRecipes
+            }
+        } else {
+            db.collection("recipes").whereField("keyword", arrayContains: key).whereField("category", isEqualTo: category).whereField("makingTime", isGreaterThan: minMakingTime).whereField("makingTime", isLessThan: maxMakingTime).addSnapshotListener { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents")
+                    return
+                }
+                
+                let newRecipes = documents.compactMap { (queryDocumentSnapshot) -> Recipe? in
+                    let data = queryDocumentSnapshot.data()
+                    
+                    // Parse recipe data
+                    let name = data["name"] as? String ?? ""
+                    let image = data["image"] as? String ?? ""
+                    let makingTime = data["makingTime"] as? Int ?? 0
+                    let category = data["category"] as? String ?? ""
+                    let description = data["description"] as? String ?? ""
+                    let ingredients = data["ingredients"] as? [String] ?? []
+                    let instructions = data["instructions"] as? [String] ?? []
+                    let review = data["review"] as? [String] ?? []
+                    let userDocumentID = data["userDocumentID"] as? String ?? ""
+                    
+                    // Create a Recipe object
+                    return Recipe(
+                        name: name,
+                        image: image,
+                        makingTime: makingTime,
+                        category: category,
+                        description: description,
+                        ingredients: ingredients,
+                        instructions: instructions,
+                        review: review,
+                        userDocumentID: userDocumentID,
+                        documentID: queryDocumentSnapshot.documentID
+                    )
+                }
+                
+                // Update the recipes array
+                self.recipes = newRecipes
+            }
+        }
+    }
 }
 

@@ -36,3 +36,27 @@ struct Recipe: Identifiable, Codable{
 
 }
 
+extension String {
+    func generateStringSequence() -> [String] {
+        //MARK: E.g) "Shrimp burger" yields "S", "Sh", "Shr", "Shrim", etc.
+        
+        //Split the name by space
+        var temp = self
+        var nameArr = temp.components(separatedBy: " ")
+        var sequences: [String] = []
+        for i in 0..<nameArr.count {
+            if let range = temp.range(of: nameArr[i]) {
+                var startingIndex = temp.distance(from: temp.startIndex, to: range.lowerBound)
+                for _ in 0..<startingIndex {
+                    var index = temp.index(temp.startIndex, offsetBy: 0)
+                    temp.remove(at: index)
+                }
+                for j in 1...temp.count {
+                    sequences.append(String(temp.prefix(j)))
+                }
+            }
+        }
+        return sequences
+    }
+}
+

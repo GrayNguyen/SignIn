@@ -19,6 +19,9 @@ struct HomeView: View {
     var isEnglish: Bool
     @State private var isShowingRecommendationList: Bool = false
     @State private var isShowingROTWList: Bool = false
+    @State private var isShowingFilter: Bool = false
+    @State private var category: String = ""
+    @State private var onSearchTap: Bool = false
     
     var body: some View {
         NavigationView {
@@ -41,7 +44,9 @@ struct HomeView: View {
                         
                         VStack(spacing: 40) {
                             //MARK: Search bar
-                            SearchBar(isEnglish: isEnglish)
+                            NavigationLink(destination: SearchView(isEnglish: isEnglish, user: user, userModelView: userModelView), isActive: $onSearchTap) {
+                                SearchBarDummy(isEnglish: isEnglish, isShowingFilter: $isShowingFilter, onSearchTap: $onSearchTap)
+                            }
                             
                             VStack {
                                 //MARK: Categories
@@ -81,7 +86,7 @@ struct HomeView: View {
                                             .bold()
                                     }
                                     .background{
-                                        NavigationLink("", destination: RecipeList(recipes: recipes, englishTitle: "Recommendation", vietnameseTitle: "Gợi ý", userViewModel: userModelView, isEnglish: isEnglish), isActive: $isShowingRecommendationList)
+                                        NavigationLink("", destination: RecipeList(user: user, recipes: recipes, englishTitle: "Recommendation", vietnameseTitle: "Gợi ý", userViewModel: userModelView, isEnglish: isEnglish), isActive: $isShowingRecommendationList)
                                     }
                                 }
                                 
@@ -111,7 +116,7 @@ struct HomeView: View {
                                             .bold()
                                     }
                                     .background{
-                                        NavigationLink("", destination: RecipeList(recipes: recipes, englishTitle: "Recipe of The Week", vietnameseTitle: "Món ăn của tuần", userViewModel: userModelView, isEnglish: isEnglish), isActive: $isShowingROTWList)
+                                        NavigationLink("", destination: RecipeList(user: user, recipes: recipes, englishTitle: "Recipe of The Week", vietnameseTitle: "Món ăn của tuần", userViewModel: userModelView, isEnglish: isEnglish), isActive: $isShowingROTWList)
                                     }
                                 }
                                 
