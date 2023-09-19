@@ -52,7 +52,7 @@ extension String {
                     temp.remove(at: index)
                 }
                 for j in 1...temp.count {
-                    sequences.append(String(temp.prefix(j)))
+                    sequences.append(String(temp.prefix(j)).lowercased())
                 }
             }
         }

@@ -113,6 +113,7 @@ class RecipeViewModel: ObservableObject {
             "ingredients": recipe.ingredients,
             "instructions": recipe.instructions,
             "review": recipe.review,
+            "keyword": recipe.name?.generateStringSequence(),
             "userDocumentID": recipe.userDocumentID
         ]
 
