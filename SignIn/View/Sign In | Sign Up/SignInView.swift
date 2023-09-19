@@ -14,11 +14,10 @@ import SwiftUI
 import Firebase
 
 struct SignInView: View {
-    @Binding var userViewModel: UserViewModel
+    var userViewModel: UserViewModel
     @State var email = ""
     @State var password = ""
     @State var loginSuccess = false
-    @State private var rememberMe: Bool = false
     @State private var isShowingSignUpView = false
     @State private var alert: String = ""
 
@@ -78,13 +77,13 @@ struct SignInView: View {
                         .padding(.bottom, 50)
                 }
                 .background(
-                    NavigationLink("", destination: AppView(email: email, userViewModel: $userViewModel), isActive: $loginSuccess)
+                    NavigationLink("", destination: AppView(email: email, userViewModel: userViewModel), isActive: $loginSuccess)
                 )
                 
                 HStack{
                     Text("You don't have an account?")
                         .foregroundColor(.black)
-                    NavigationLink(destination: SignUpView(userViewModel: $userViewModel), isActive: $isShowingSignUpView){
+                    NavigationLink(destination: SignUpView(userViewModel: userViewModel), isActive: $isShowingSignUpView){
                         Button {
                             isShowingSignUpView = true
                         } label: {
@@ -126,6 +125,6 @@ struct SignInView: View {
 
 struct SignInViewView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView(userViewModel: .constant(UserViewModel()))
+        SignInView(userViewModel: UserViewModel())
     }
 }

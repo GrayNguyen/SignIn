@@ -19,7 +19,7 @@ struct UserView: View {
     //MARK: Properties
     @Environment(\.dismiss) var dismiss
     @Binding var user: User
-    @Binding var userViewModel: UserViewModel
+    var userViewModel: UserViewModel
     @State private var isEditMode: Bool = false
     @State private var isShowingSettingView: Bool = false
     @State private var logOut: Bool = false
@@ -325,6 +325,6 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView(user: .constant(User(firstName: "Long", lastName: "Nguyen",dob: "16/03/2000", gender: "Male", email: "viphilongnguyen@gmail.com", phone: "0834160300", address: "", favourite: [], avatar: "", documentID: "")), userViewModel: .constant(UserViewModel()))
+        UserView(user: .constant(User(firstName: "Long", lastName: "Nguyen",dob: "16/03/2000", gender: "Male", email: "viphilongnguyen@gmail.com", phone: "0834160300", address: "", favourite: [], avatar: "", documentID: "")), userViewModel: UserViewModel())
     }
 }

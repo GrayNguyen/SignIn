@@ -9,9 +9,8 @@ import SwiftUI
 
 struct ButtonGroup: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var recipe: Recipe
-    @Binding var recipes: [Recipe]
-    @Binding var recipeViewModel: RecipeViewModel
+    var recipe: Recipe
+    var recipeViewModel: RecipeViewModel
     @Binding var alertMessage: String
     @State private var isShowingAlert: Bool = false
     @State private var isEditing: Bool = false
@@ -29,7 +28,7 @@ struct ButtonGroup: View {
                             .frame(width: 50, height: 50))
             })
             .background{
-                NavigationLink("", destination: UpdateRecipeView(recipe: $recipe, recipes: $recipes, recipeViewModel: $recipeViewModel), isActive: $isEditing)
+                NavigationLink("", destination: UpdateRecipeView(recipe: recipe, recipeViewModel: recipeViewModel), isActive: $isEditing)
             }
             
             Button(action: {
@@ -53,9 +52,6 @@ struct ButtonGroup: View {
                                 switch result {
                                 case .success(let message):
                                     alertMessage = message
-                                    if let index = recipes.firstIndex(where: { $0.id == recipe.id }) {
-                                        recipes.remove(at: index)
-                                    }
                                 case .failure(let error):
                                     alertMessage = "Error deleting recipe: \(error.localizedDescription)"
                                 }
@@ -72,6 +68,6 @@ struct ButtonGroup: View {
 
 struct ButtonGroup_Previews: PreviewProvider {
     static var previews: some View {
-        ButtonGroup(recipe: .constant(Recipe(ingredients: [], instructions: [], review: [], userDocumentID: "")), recipes: .constant([]),recipeViewModel: .constant(RecipeViewModel()), alertMessage: .constant(""))
+        ButtonGroup(recipe: Recipe(ingredients: [], instructions: [], review: [], userDocumentID: ""),recipeViewModel: RecipeViewModel(), alertMessage: .constant(""))
     }
 }

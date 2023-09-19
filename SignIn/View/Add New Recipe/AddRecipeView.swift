@@ -15,8 +15,7 @@ import SwiftUI
 struct AddRecipeView: View {
     @Environment(\.dismiss) var dismiss
     var user: User
-    @Binding var recipes: [Recipe]
-    @Binding var recipeViewModel: RecipeViewModel
+    var recipeViewModel: RecipeViewModel
     
     let catergoryArr: [String] = ["None", "Breakfast", "Lunch", "Dinner", "Dessert", "Smoothies"]
     
@@ -263,9 +262,6 @@ struct AddRecipeView: View {
                     isPostingRecipe = false
                     if success {
                         isShowingSuccess = true
-                        
-                        // add the new recipe into the array
-                        recipes.append(recipe)
                     } else {
                         
                     }
@@ -289,7 +285,6 @@ struct AddRecipeView_Previews: PreviewProvider {
             avatar: "",
             documentID: "123456"
         ),
-        recipes: .constant([]),
-        recipeViewModel: .constant(RecipeViewModel()))
+        recipeViewModel: RecipeViewModel())
     }
 }

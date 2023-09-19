@@ -9,9 +9,8 @@ import SwiftUI
 
 struct UpdateRecipeView: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var recipe: Recipe
-    @Binding var recipes: [Recipe]
-    @Binding var recipeViewModel: RecipeViewModel
+    var recipe: Recipe
+    var recipeViewModel: RecipeViewModel
     @State private var alertMessage: String = ""
     
     let catergoryArr: [String] = ["None", "Breakfast", "Lunch", "Dinner", "Dessert", "Smoothies"]
@@ -229,12 +228,12 @@ struct UpdateRecipeView: View {
         isUpdatingRecipe = true
 
         // Update the properties of the existing recipe
-        recipe.name = recipeName
-        recipe.description = description
-        recipe.category = category
-        recipe.makingTime = makingTime
-        recipe.ingredients = ingredients
-        recipe.instructions = instructions
+//        recipe.name = recipeName
+//        recipe.description = description
+//        recipe.category = category
+//        recipe.makingTime = makingTime
+//        recipe.ingredients = ingredients
+//        recipe.instructions = instructions
 
         // Pass the updated recipe to the view model's updateRecipe function
         recipeViewModel.updateRecipe(recipe: recipe) { result in
@@ -244,11 +243,6 @@ struct UpdateRecipeView: View {
             case .success(let message):
                 isShowingSuccess = true
                 alertMessage = message
-
-                // Update the local copy of the recipe in the recipes array
-                if let index = recipes.firstIndex(where: { $0.id == recipe.id }) {
-                    recipes[index] = recipe
-                }
 
             case .failure(let error):
                 // Handle the error and show an alert with an error message
@@ -260,6 +254,6 @@ struct UpdateRecipeView: View {
 
 struct UpdateRecipeView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdateRecipeView(recipe: .constant(Recipe(id: "9C4438DB-F970-4DB5-A2D4-41628CA67F0B", name: Optional("Air fryer chicken breast salad"), image: Optional("images/2022D512_AIRFRYER_SALAD-768x960.jpg"), makingTime: Optional(20), category: Optional("Dinner"), description: Optional("Chicken is an air fryer’s best friend – it cooks it quickly, evenly and without drying it out. This simple recipe for spiced chicken breast is served with a honey mustard salad, but you can cook the breasts and serve them however you like."), ingredients: ["2 skinless free-range chicken breasts", "Juice 1 lemon", "1 tbsp olive oil", "1 tbsp smoked paprika", "1 tsp sea salt", "1 tsp freshly ground black pepper", "1 tsp cayenne pepper", "½ tsp dried oregano"], instructions: ["Put each chicken breast between 2 sheets of baking paper and bash with a rolling pin until evenly flat all over (they don’t have to be super-thin, just the same thickness throughout). Use a fork to prick lots of little holes in the chicken, then put them in a dish and coat with the lemon juice and olive oil.", "Heat the air fryer to 190°C. Mix the paprika, salt, pepper, cayenne and oregano together, then massage the mixture all over the chicken breasts, ensuring an even, liberal coverage. Put the chicken in the air fryer and cook for 16 minutes, turning halfway.", "While the chicken cooks, put the honey, mustard, oil, vinegar and garlic in a clean jam jar, season with a generous pinch of salt and pepper and shake to create a dressing. Season the tomatoes with a pinch of salt.", "To serve, toss the lettuce in some of the dressing to coat, then divide between bowls. Arrange the tomatoes and capers on top. Slice the chicken breasts and put them in the centre, then drizzle over the remaining dressing."], review: [], userDocumentID: "L56IcwjgJP1mKaN4wdI3", documentID: Optional("wYMAnwGqv0zGhmOFyEul"))), recipes: .constant([]), recipeViewModel: .constant(RecipeViewModel()))
+        UpdateRecipeView(recipe: Recipe(id: "9C4438DB-F970-4DB5-A2D4-41628CA67F0B", name: Optional("Air fryer chicken breast salad"), image: Optional("images/2022D512_AIRFRYER_SALAD-768x960.jpg"), makingTime: Optional(20), category: Optional("Dinner"), description: Optional("Chicken is an air fryer’s best friend – it cooks it quickly, evenly and without drying it out. This simple recipe for spiced chicken breast is served with a honey mustard salad, but you can cook the breasts and serve them however you like."), ingredients: ["2 skinless free-range chicken breasts", "Juice 1 lemon", "1 tbsp olive oil", "1 tbsp smoked paprika", "1 tsp sea salt", "1 tsp freshly ground black pepper", "1 tsp cayenne pepper", "½ tsp dried oregano"], instructions: ["Put each chicken breast between 2 sheets of baking paper and bash with a rolling pin until evenly flat all over (they don’t have to be super-thin, just the same thickness throughout). Use a fork to prick lots of little holes in the chicken, then put them in a dish and coat with the lemon juice and olive oil.", "Heat the air fryer to 190°C. Mix the paprika, salt, pepper, cayenne and oregano together, then massage the mixture all over the chicken breasts, ensuring an even, liberal coverage. Put the chicken in the air fryer and cook for 16 minutes, turning halfway.", "While the chicken cooks, put the honey, mustard, oil, vinegar and garlic in a clean jam jar, season with a generous pinch of salt and pepper and shake to create a dressing. Season the tomatoes with a pinch of salt.", "To serve, toss the lettuce in some of the dressing to coat, then divide between bowls. Arrange the tomatoes and capers on top. Slice the chicken breasts and put them in the centre, then drizzle over the remaining dressing."], review: [], userDocumentID: "L56IcwjgJP1mKaN4wdI3", documentID: Optional("wYMAnwGqv0zGhmOFyEul")), recipeViewModel: RecipeViewModel())
     }
 }

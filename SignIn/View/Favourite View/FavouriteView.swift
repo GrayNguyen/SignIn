@@ -9,10 +9,9 @@ import SwiftUI
 
 struct FavouriteView: View {
     @Binding var user: User
-    @Binding var recipeViewModel: RecipeViewModel
+    var recipeViewModel: RecipeViewModel
     var userViewModel: UserViewModel
     @Binding var viewedRecipes: [Recipe]
-    @Binding var recipes: [Recipe]
     @State private var favouritedRecipes: [Recipe] = []
     
     var body: some View {
@@ -21,7 +20,7 @@ struct FavouriteView: View {
                 VStack {
                     
                     HStack{
-                        Text("My Recipe")
+                        Text("My Favourited Recipes")
                             .font(.system(size: 26))
                             .bold()
                             .padding(.bottom, 20)
@@ -40,7 +39,7 @@ struct FavouriteView: View {
                             
                             ForEach(0..<favouritedRecipes.count, id: \.self) {index in
                                 if index % 2 == 0 {
-                                    NavigationLink(destination: RecipeInfo(recipe: favouritedRecipes[index], recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                    NavigationLink(destination: RecipeInfo(recipe: favouritedRecipes[index], recipeViewModel: recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
                                         GeneralRecipeView(recipe: favouritedRecipes[index], userViewModel: userViewModel, size: 150.0)
                                     }
                                 }
@@ -50,7 +49,7 @@ struct FavouriteView: View {
                         VStack {
                             ForEach(0..<favouritedRecipes.count, id: \.self) { index in
                                 if index % 2 == 1 {
-                                    NavigationLink(destination: RecipeInfo(recipe: favouritedRecipes[index], recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                    NavigationLink(destination: RecipeInfo(recipe: favouritedRecipes[index], recipeViewModel: recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
                                         GeneralRecipeView(recipe: favouritedRecipes[index], userViewModel: userViewModel, size: 150.0)
                                     }
                                 }
@@ -71,13 +70,13 @@ struct FavouriteView: View {
                     return false
                 }
             }
-        .navigationBarBackButtonHidden(true)
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 struct FavouriteView_Previews: PreviewProvider {
     static var previews: some View {
-        FavouriteView(user: .constant(User(firstName: "", email: "", favourite: [])), recipeViewModel: .constant(RecipeViewModel()), userViewModel: UserViewModel(), viewedRecipes: .constant([]), recipes: .constant([]))
+        FavouriteView(user: .constant(User(firstName: "", email: "", favourite: [])), recipeViewModel: RecipeViewModel(), userViewModel: UserViewModel(), viewedRecipes: .constant([]))
     }
 }

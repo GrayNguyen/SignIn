@@ -14,8 +14,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Binding var user: User
-    @Binding var recipes: [Recipe]
-    @Binding var recipeViewModel: RecipeViewModel
+    var recipeViewModel: RecipeViewModel
     var userViewModel: UserViewModel
     @State private var isShowingRecommendationList: Bool = false
     @State private var isShowingROTWList: Bool = false
@@ -86,14 +85,14 @@ struct HomeView: View {
                                             .bold()
                                     }
                                     .background{
-                                        NavigationLink("", destination: RecipeList(recipes: $recipes, title: "Recipe of The Week", recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingROTWList)
+                                        NavigationLink("", destination: RecipeList(title: "Recipe of The Week", recipeViewModel: recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingROTWList)
                                     }
                                 }
                                 
                                 ScrollView(.horizontal, showsIndicators: false){
                                     HStack{
                                         ForEach(newestRecipes) {recipe in
-                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipes: $recipes,recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipeViewModel: recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
                                                 GeneralRecipeView(recipe: recipe, userViewModel: userViewModel, size: 200.0)
                                             }
                                         }
@@ -118,14 +117,14 @@ struct HomeView: View {
                                             .bold()
                                     }
                                     .background{
-                                        NavigationLink("", destination: RecipeList(recipes: $recipes, title: "Recommendation", recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingRecommendationList)
+                                        NavigationLink("", destination: RecipeList(title: "Recommendation", recipeViewModel: recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingRecommendationList)
                                     }
                                 }
                                 
                                 ScrollView(.horizontal, showsIndicators: false){
                                     HStack{
                                         ForEach(recommendationRecipes) {recipe in
-                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipeViewModel: recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
                                                 GeneralRecipeView(recipe: recipe, userViewModel: userViewModel, size: 200.0)
                                             }
                                         }
@@ -150,14 +149,14 @@ struct HomeView: View {
                                             .bold()
                                     }
                                     .background{
-                                        NavigationLink("", destination: RecipeList(recipes: $recipes, title: "Recipe of The Week", recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingROTWList)
+                                        NavigationLink("", destination: RecipeList( title: "Recipe of The Week", recipeViewModel: recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingROTWList)
                                     }
                                 }
                                 
                                 ScrollView(.horizontal, showsIndicators: false){
                                     HStack{
                                         ForEach(recipesOfTheWeek) {recipe in
-                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipes: $recipes,recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipeViewModel: recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
                                                 GeneralRecipeView(recipe: recipe, userViewModel: userViewModel, size: 200.0)
                                             }
                                         }
@@ -182,17 +181,17 @@ struct HomeView: View {
                                             .bold()
                                     }
                                     .background{
-                                        NavigationLink("", destination: RecipeList(recipes: $recipes, title: "Recommendation", recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingRecommendationList)
+                                        NavigationLink("", destination: RecipeList(title: "Recommendation", recipeViewModel: recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingRecommendationList)
                                     }
                                 }
                                 
                                 ScrollView(.horizontal, showsIndicators: false){
                                     HStack{
-                                        ForEach(viewedRecipes) {recipe in
-                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipes: $viewedRecipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
-                                                GeneralRecipeView(recipe: recipe, userViewModel: userViewModel, size: 200.0)
-                                            }
-                                        }
+//                                        ForEach(viewedRecipes) {recipe in
+//                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipeViewModel: recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+//                                                GeneralRecipeView(recipe: recipe, userViewModel: userViewModel, size: 200.0)
+//                                            }
+//                                        }
                                     }
                                 }
                             }
@@ -203,17 +202,16 @@ struct HomeView: View {
             }
             .background(Color.gray.opacity(0.2))
             .onAppear{
-                recipes = recipeViewModel.recipes
-                
                 //get the newest ones
-                newestRecipes = Array(recipes.suffix(10))
+                newestRecipes = Array(recipeViewModel.recipes.suffix(10))
 
                 // Randomly select 10 more recipes for recommendations
-                var remainingRecipes = Array(recipes.dropLast(10))
-                recommendationRecipes = Array(recipes.shuffled().prefix(10))
+                var remainingRecipes = Array(recipeViewModel.recipes.dropLast(10))
+                recommendationRecipes = Array(recipeViewModel.recipes.shuffled().prefix(10))
 
                 // Set recipesOfTheWeek to a subset of allRecipes (you can adjust this logic as needed)
-                recipesOfTheWeek = Array(recipes.prefix(10))
+                recipesOfTheWeek = Array(recipeViewModel.recipes.prefix(10))
+                print(recipeViewModel.recipes)
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -234,8 +232,7 @@ struct HomeView_Previews: PreviewProvider {
             avatar: "",
             documentID: ""
         )),
-                 recipes: .constant([]),
-                 recipeViewModel: .constant(RecipeViewModel()),
+                 recipeViewModel: RecipeViewModel(),
                  userViewModel: UserViewModel(),
                  viewedRecipes: .constant([]))
     }

@@ -9,9 +9,8 @@ import SwiftUI
 
 struct RecipeList: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var recipes: [Recipe]
     var title: String
-    @Binding var recipeViewModel: RecipeViewModel
+    var recipeViewModel: RecipeViewModel
     var userViewModel: UserViewModel
     @Binding var viewedRecipes: [Recipe]
     @Binding var user: User
@@ -20,9 +19,9 @@ struct RecipeList: View {
     
     var filteredRecipes: [Recipe] {
         if searchText.isEmpty {
-            return recipes
+            return recipeViewModel.recipes
         } else {
-            let filtered = recipes.filter { recipe in
+            let filtered = recipeViewModel.recipes.filter { recipe in
                 if let recipeName = recipe.name {
                     return recipeName.localizedCaseInsensitiveContains(searchText)
                 }
@@ -64,7 +63,7 @@ struct RecipeList: View {
                             
                             ForEach(0..<filteredRecipes.count, id: \.self) { index in
                                 if index % 2 == 0 {
-                                    NavigationLink(destination: RecipeInfo(recipe: filteredRecipes[index], recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                    NavigationLink(destination: RecipeInfo(recipe: filteredRecipes[index], recipeViewModel: recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
                                         GeneralRecipeView(recipe: filteredRecipes[index], userViewModel: userViewModel, size: 150.0)
                                     }
                                 }
@@ -75,7 +74,7 @@ struct RecipeList: View {
                         VStack {
                             ForEach(0..<filteredRecipes.count, id: \.self) { index in
                                 if index % 2 == 1 {
-                                    NavigationLink(destination: RecipeInfo(recipe: filteredRecipes[index], recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                    NavigationLink(destination: RecipeInfo(recipe: filteredRecipes[index], recipeViewModel: recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
                                         GeneralRecipeView(recipe: filteredRecipes[index], userViewModel: userViewModel, size: 150.0)
                                     }
                                 }
@@ -107,6 +106,6 @@ struct RecipeList: View {
 
 struct RecipeList_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeList(recipes: .constant([]), title: "", recipeViewModel: .constant(RecipeViewModel()),userViewModel: UserViewModel(), viewedRecipes: .constant([]), user: .constant(User(firstName: "", email: "", favourite: [])))
+        RecipeList(title: "", recipeViewModel: RecipeViewModel(),userViewModel: UserViewModel(), viewedRecipes: .constant([]), user: .constant(User(firstName: "", email: "", favourite: [])))
     }
 }

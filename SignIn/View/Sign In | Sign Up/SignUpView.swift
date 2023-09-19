@@ -14,7 +14,7 @@ import SwiftUI
 import Firebase
 
 struct SignUpView: View {
-    @Binding var userViewModel: UserViewModel
+    var userViewModel: UserViewModel
     @State var email = ""
     @State var password = ""
     @State var passwordConfirmation = ""
@@ -83,7 +83,7 @@ struct SignUpView: View {
                 
                 HStack{
                     Text("Already have an account?")
-                    NavigationLink(destination: SignInView(userViewModel: $userViewModel), isActive: $isShowingSignInView){
+                    NavigationLink(destination: SignInView(userViewModel: userViewModel), isActive: $isShowingSignInView){
                         Button {
                             isShowingSignInView = true
                         } label: {
@@ -126,6 +126,6 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(userViewModel: .constant(UserViewModel()))
+        SignUpView(userViewModel: UserViewModel())
     }
 }

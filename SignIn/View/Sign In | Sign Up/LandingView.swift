@@ -13,7 +13,7 @@
 import SwiftUI
 
 struct LandingView: View {
-    @State private var userViewModel = UserViewModel()
+    @StateObject var userViewModel = UserViewModel()
     @State private var isShowingSignInView: Bool = false
     @State private var isShowingSignUpView: Bool = false
     
@@ -30,7 +30,7 @@ struct LandingView: View {
                 Spacer()
                 
                 VStack{
-                    NavigationLink(destination: SignUpView(userViewModel: $userViewModel), isActive: $isShowingSignUpView){
+                    NavigationLink(destination: SignUpView(userViewModel: userViewModel), isActive: $isShowingSignUpView){
                         Button {
                             isShowingSignUpView = true
                         } label: {	
@@ -44,7 +44,7 @@ struct LandingView: View {
                         }
                     }
                     
-                    NavigationLink(destination: SignInView(userViewModel: $userViewModel), isActive: $isShowingSignInView){
+                    NavigationLink(destination: SignInView(userViewModel: userViewModel), isActive: $isShowingSignInView){
                         Button {
                             isShowingSignInView = true
                         } label: {

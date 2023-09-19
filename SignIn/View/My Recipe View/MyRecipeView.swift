@@ -8,82 +8,77 @@
 import SwiftUI
 
 struct MyRecipeView: View {
-    var recipes: [Recipe]
+    var recipeViewModel: RecipeViewModel
     var userViewModel: UserViewModel
-    var isEnglish: Bool
-    var user: User
-    
-    @State private var searchText = ""
+    @State private var alertMessage: String = ""
+    @State private var isShowingAlert: Bool = false
     
     var body: some View {
-//        VStack{
-//            SearchBar(isEnglish: isEnglish)
-//                .padding(.horizontal, 15)
-            
-//            HStack(alignment: .top, spacing: 20){
-//                Spacer()
-//
-//                VStack(alignment: .leading){
-//                    Text("My Recipes")
-//                        .font(.title2)
-//                        .bold()
-//
-//                    ForEach(0..<Category.categories.count, id: \.self) { index in
-//                        if index % 2 == 0 {
-//                            UserRecipeView(recipe: recipes[index], userViewModel: userViewModel, size: 150.0)
-//                        }
-//                    }
-//                }
-//
-//                VStack {
-//                    ForEach(0..<Category.categories.count, id: \.self) { index in
-//                        if index % 2 == 1{
-//                            UserRecipeView(recipe: recipes[index], userViewModel: userViewModel, size: 150.0)
-//                        }
-//                    }
-//                }
-//
-//                Spacer()
-//            }
-//
-//
-//            .background(Color.gray.opacity(0.2))
-//            .navigationBarBackButtonHidden(true)
-            
-//        }
-        
         NavigationView {
-            ZStack {
-                Color.gray.opacity(0.2)
-                    .edgesIgnoringSafeArea(.all)
-                
-                List {
-                    ForEach(searchResults) {recipe in
-                        NavigationLink {
-                            EditRecipeView(isEnglish: isEnglish, user: user, recipeViewModel: <#T##RecipeViewModel#>, editRecipe: )
-                        } label: {
-                            UserRecipeView(recipe: recipe, userViewModel: userViewModel, size: 100.0)
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+//                    SearchBar()
+                    
+                    HStack{
+                        Text("My Recipe")
+                            .font(.system(size: 26))
+                            .bold()
+                            .padding(.bottom, 20)
+                        
+                        Spacer()
+                    }
+                    .padding(.horizontal, 15)
+                    
+                    HStack(alignment: .top, spacing: 5){
+                        VStack(alignment: .leading){
+                            Text("My Recipe")
+                                .font(.system(size: 20))
+                                .bold()
+                                .padding(.bottom, 20)
+                                .opacity(0)
+                            
+                            ForEach(0..<recipeViewModel.recipes.count, id: \.self) { index in
+                                if index % 2 == 0 {
+                                    NavigationLink(destination: MyRecipeInfo(recipe: recipeViewModel.recipes[index], recipeViewModel: recipeViewModel, alertMessage: $alertMessage)) {
+                                        GeneralRecipeView(recipe: recipeViewModel.recipes[index], userViewModel: userViewModel, size: 150.0)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        VStack {
+                            ForEach(0..<recipeViewModel.recipes.count, id: \.self) { index in
+                                if index % 2 == 1 {
+                                    NavigationLink(destination: MyRecipeInfo(recipe: recipeViewModel.recipes[index], recipeViewModel: recipeViewModel, alertMessage: $alertMessage)) {
+                                        GeneralRecipeView(recipe: recipeViewModel.recipes[index], userViewModel: userViewModel, size: 150.0)
+                                    }
+                                }
+                            }
                         }
                     }
+                    .padding(.top, 20)
                 }
-                .navigationTitle("Your Recipes")
+                .padding(.horizontal, 15)
+            }
+            .background(Color.gray.opacity(0.2))
+            .onChange(of: alertMessage) { newValue in
+                if newValue != "" {
+                    isShowingAlert = true
+                }
+            }
+            .alert(isPresented: $isShowingAlert) {
+                Alert(
+                    title: Text("Delete Recipe"),
+                    message: Text(alertMessage)
+                )
             }
         }
-        .searchable(text: $searchText)
+        .navigationBarBackButtonHidden(true)
     }
-    
-    var searchResults: [Recipe] {
-        if searchText.isEmpty {
-            return recipes
-        } else {
-            return recipes.filter { $0.name!.contains(searchText) }
-        }
-    }
-
 }
 
 struct MyRecipeView_Previews: PreviewProvider {
     static var previews: some View {
-        MyRecipeView(recipes: [], userViewModel: UserViewModel(), isEnglish: true)
+        MyRecipeView(recipeViewModel: RecipeViewModel(),userViewModel: UserViewModel())
     }
 }
