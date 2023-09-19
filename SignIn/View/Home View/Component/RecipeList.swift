@@ -12,6 +12,9 @@ struct RecipeList: View {
     var title: String
     var recipeViewModel: RecipeViewModel
     var userViewModel: UserViewModel
+    @State private var minMakingTime: Int = 0
+    @State private var maxMakingTime: Int = 180
+    @State private var category: String = "None"
     @Binding var viewedRecipes: [Recipe]
     @Binding var user: User
     
@@ -23,7 +26,17 @@ struct RecipeList: View {
         } else {
             let filtered = recipeViewModel.recipes.filter { recipe in
                 if let recipeName = recipe.name {
-                    return recipeName.localizedCaseInsensitiveContains(searchText)
+                    if (recipeName.localizedCaseInsensitiveContains(searchText)) {
+                        if let recipeTimeMaking = recipe.makingTime {
+                            if (recipeTimeMaking <= maxMakingTime && recipeTimeMaking >= minMakingTime) {
+                                if (category == "None") {
+                                    return true
+                                } else if let recipeCategory = recipe.category {
+                                    return recipe.category == category
+                                }
+                            }
+                        }
+                    }
                 }
                 return false
             }
@@ -38,7 +51,7 @@ struct RecipeList: View {
                     HStack(spacing: 20){
                         BackButton
                         
-                        SearchBar(text: $searchText, placeholder: "Search any recipes")
+                        SearchBar(text: $searchText, placeholder: "Search any recipes", minTimeMaking: $minMakingTime, maxTimeMaking: $maxMakingTime, category: $category)
                                 .frame(maxWidth: .infinity)
                                 .padding(.leading, 5)
                     }

@@ -16,9 +16,9 @@ struct SearchBar: View {
     @Binding var text: String
     var placeholder: String
     @State private var isShowingFilter: Bool = false
-    @State private var minTimeMaking: Int = 0
-    @State private var maxTimeMaking: Int = 180
-    @State private var category: String = "None"
+    @Binding var minTimeMaking: Int
+    @Binding var maxTimeMaking: Int
+    @Binding var category: String
 
     var body: some View {
         HStack {
@@ -58,10 +58,13 @@ struct SearchBar: View {
 }
 
 struct SearchBar_Previews: PreviewProvider {
+    @State private static var minTimeMaking: Int = 0
+    @State private static var maxTimeMaking: Int = 180
+    @State private static var category: String = "None"
     static var previews: some View {
         VStack{
             Spacer()
-            SearchBar(text: .constant(""), placeholder: "")
+            SearchBar(text: .constant(""), placeholder: "", minTimeMaking: $minTimeMaking, maxTimeMaking: $maxTimeMaking, category: $category)
             Spacer()
         }
         .background(.gray.opacity(0.2))
