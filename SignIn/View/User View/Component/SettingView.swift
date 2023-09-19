@@ -14,7 +14,6 @@ import SwiftUI
 
 struct SettingView: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var isEnglish: Bool
 
     var body: some View {
         VStack {
@@ -30,7 +29,7 @@ struct SettingView: View {
 
                 Spacer()
 
-                Text(isEnglish ? "Setting" : "Cài Đặt")
+                Text("Setting")
                     .font(.system(size: 32))
 
                 Spacer()
@@ -47,50 +46,6 @@ struct SettingView: View {
             .padding(.horizontal, 20)
 
             VStack(alignment: .leading){
-               Text("LANGUAGE")
-                    .font(.system(size: 14))
-                    .foregroundColor(.secondary)
-                
-                VStack(spacing: 0){
-                    Button {
-                        isEnglish = true
-                    } label: {
-                        HStack {
-                            Text(isEnglish ? "English" : "Tiếng Anh")
-                                .font(.system(size: 22))
-                                .foregroundColor(Color("ForegroundColor"))
-                            
-                            Spacer()
-                            
-                            Image(systemName: "checkmark.circle")
-                                .font(.system(size: 28))
-                                .opacity(isEnglish ? 1 : 0)
-                        }
-                    }
-                    .padding()
-                    .background(.thinMaterial)
-                    .cornerRadius(10)
-                    
-                    Button {
-                        isEnglish = false
-                    } label: {
-                        HStack {
-                            Text(isEnglish ? "Vietnamese" : "Tiếng Việt")
-                                .font(.system(size: 22))
-                                .foregroundColor(Color("ForegroundColor"))
-                            
-                            Spacer()
-                            
-                            Image(systemName: "checkmark.circle")
-                                .font(.system(size: 28))
-                                .opacity(isEnglish ? 0 : 1)
-                        }
-                    }
-                    .padding()
-                    .background(.thinMaterial)
-                    .cornerRadius(10)
-                }
-                
                 Text("THEME")
                      .font(.system(size: 14))
                      .foregroundColor(.secondary)
@@ -108,7 +63,7 @@ struct SettingView: View {
                                 .scaledToFit()
                                 .frame(width: 120)
                                 .cornerRadius(16)
-                            Text(isEnglish ? "Light" : "Sáng")
+                            Text("Light")
                                 .foregroundColor(Color("ForegroundColor"))
                                 .font(.title2)
                             Image(systemName: "checkmark.circle")
@@ -125,7 +80,7 @@ struct SettingView: View {
                                 .scaledToFit()
                                 .frame(width: 120)
                                 .cornerRadius(16)
-                            Text(isEnglish ? "Dark" : "Tối")
+                            Text("Dark")
                                 .foregroundColor(Color("ForegroundColor"))
                                 .font(.title2)
                             Image(systemName: "checkmark.circle.fill")
@@ -154,6 +109,6 @@ struct SettingView: View {
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView(isEnglish: .constant(false))
+        SettingView()
     }
 }

@@ -8,50 +8,105 @@
 import SwiftUI
 
 struct RecipeList: View {
-    var recipes: [Recipe]
-    var englishTitle: String
-    var vietnameseTitle: String
+    @Environment(\.presentationMode) var presentationMode
+    @Binding var recipes: [Recipe]
+    var title: String
+    @Binding var recipeViewModel: RecipeViewModel
     var userViewModel: UserViewModel
-    var isEnglish: Bool
+    @Binding var viewedRecipes: [Recipe]
+    @Binding var user: User
+    
+    @State private var searchText: String = ""
+    
+    var filteredRecipes: [Recipe] {
+        if searchText.isEmpty {
+            return recipes
+        } else {
+            let filtered = recipes.filter { recipe in
+                if let recipeName = recipe.name {
+                    return recipeName.localizedCaseInsensitiveContains(searchText)
+                }
+                return false
+            }
+            return filtered
+        }
+    }
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack {
-                SearchBar(isEnglish: isEnglish)
-                
-                HStack(alignment: .top, spacing: 5){
-                    VStack(alignment: .leading){
-                        Text(isEnglish ? englishTitle : vietnameseTitle)
-                            .font(.title2)
-                            .bold()
-                            .padding(.bottom, 20)
+        NavigationView {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    HStack(spacing: 20){
+                        BackButton
                         
-                        ForEach(0..<recipes.count, id: \.self) { index in
-                            if index % 2 == 0 {
-                                GeneralRecipeView(recipe: recipes[index], userViewModel: userViewModel, size: 150.0)
-                            }
-                        }
+                        SearchBar(text: $searchText, placeholder: "Search any recipes")
+                                .frame(maxWidth: .infinity)
+                                .padding(.leading, 5)
                     }
+                    .padding(.horizontal, 15)
                     
-                    VStack {
-                        ForEach(0..<recipes.count, id: \.self) { index in
-                            if index % 2 == 1{
-                                GeneralRecipeView(recipe: recipes[index], userViewModel: userViewModel, size: 150.0)
+                    HStack{
+                        Text(title)
+                            .font(.system(size: 26))
+                            .bold()
+                        
+                        Spacer()
+                    }
+                    .padding(.horizontal, 10)
+                    
+                    HStack(alignment: .top, spacing: 5){
+                        VStack(alignment: .leading){
+                            Text(title)
+                                .font(.system(size: 20))
+                                .bold()
+                                .padding(.bottom, 30)
+                                .opacity(0)
+                            
+                            ForEach(0..<filteredRecipes.count, id: \.self) { index in
+                                if index % 2 == 0 {
+                                    NavigationLink(destination: RecipeInfo(recipe: filteredRecipes[index], recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                        GeneralRecipeView(recipe: filteredRecipes[index], userViewModel: userViewModel, size: 150.0)
+                                    }
+                                }
                             }
                         }
+                        .frame(width: 180)
+                        
+                        VStack {
+                            ForEach(0..<filteredRecipes.count, id: \.self) { index in
+                                if index % 2 == 1 {
+                                    NavigationLink(destination: RecipeInfo(recipe: filteredRecipes[index], recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                        GeneralRecipeView(recipe: filteredRecipes[index], userViewModel: userViewModel, size: 150.0)
+                                    }
+                                }
+                            }
+                        }
+                        .frame(width: 180)
                     }
-                
+                    .padding(.top, 20)
                 }
-                .padding(.top, 20)
             }
-            .padding(.horizontal, 15)
+            .background(Color.gray.opacity(0.2))
         }
-        .background(Color.gray.opacity(0.2))
+        .navigationBarBackButtonHidden(true)
+    }
+    
+    var BackButton: some View {
+        Button(action: {
+            presentationMode.wrappedValue.dismiss()
+        }, label: {
+            Image(systemName: "arrow.left")
+                .foregroundColor(Color("BackgroundColor"))
+                .font(.title2)
+                .background(Circle()
+                                .fill(Color("ForegroundColor"))
+                                .frame(width: 50, height: 50))
+        })
     }
 }
 
 struct RecipeList_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeList(recipes: [], englishTitle: "", vietnameseTitle: "", userViewModel: UserViewModel(), isEnglish: false)
+        RecipeList(recipes: .constant([]), title: "", recipeViewModel: .constant(RecipeViewModel()),userViewModel: UserViewModel(), viewedRecipes: .constant([]), user: .constant(User(firstName: "", email: "", favourite: [])))
     }
 }

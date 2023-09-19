@@ -13,38 +13,47 @@
 import SwiftUI
 
 struct SearchBar: View {
-    var isEnglish: Bool
-    @State private var text: String = ""
-    
-    func search(){
-        
-    }
-    
+    @Binding var text: String
+    var placeholder: String
+    @State private var isShowingFilter: Bool = false
+    @State private var minTimeMaking: Int = 0
+    @State private var maxTimeMaking: Int = 180
+    @State private var category: String = "None"
+
     var body: some View {
-        HStack{
+        HStack {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(Color("ForegroundColor"))
                 .font(.system(size: 18))
                 .bold()
+
+            TextField(placeholder, text: $text)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(Color("BackgroundColor"))
+                )
+                .foregroundColor(Color("ForegroundColor"))
+                .textInputAutocapitalization(.never)
+                .disableAutocorrection(true)
             
-            TextField(
-                isEnglish ? "Search any recipes" : "Tìm công thức món ăn",
-                text: $text
-            )
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color("BackgroundColor"))
-            )
-            .onSubmit {
-                search()
+            Text("|")
+            
+            Button {
+                isShowingFilter = true
+            } label: {
+                Image(systemName: "slider.horizontal.3")
+                    .foregroundColor(Color("ForegroundColor"))
+                    .font(.system(size: 18))
+                    .bold()
             }
-            .foregroundColor(Color("ForegroundColor"))
-            .textInputAutocapitalization(.never)
-            .disableAutocorrection(true)
         }
-        .padding(.horizontal,16)
+        .padding(.horizontal, 16)
         .background(RoundedRectangle(cornerRadius: 30).fill(Color("BackgroundColor")))
+        .sheet(isPresented: $isShowingFilter) {
+            FilterView(minTimeMaking: $minTimeMaking, maxTimeMaking: $maxTimeMaking, category: $category)
+                .presentationDetents([.medium])
+        }
     }
 }
 
@@ -52,7 +61,7 @@ struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
         VStack{
             Spacer()
-            SearchBar(isEnglish: false)
+            SearchBar(text: .constant(""), placeholder: "")
             Spacer()
         }
         .background(.gray.opacity(0.2))

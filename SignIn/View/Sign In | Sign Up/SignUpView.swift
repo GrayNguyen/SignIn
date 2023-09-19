@@ -14,13 +14,13 @@ import SwiftUI
 import Firebase
 
 struct SignUpView: View {
-    @Binding var isEnglish: Bool
     @Binding var userViewModel: UserViewModel
     @State var email = ""
     @State var password = ""
     @State var passwordConfirmation = ""
     @State var signUpSuccess = false
     @State private var isShowingSignInView: Bool = false
+    @State private var alert: String = ""
     
     var body: some View {
         NavigationView {
@@ -28,9 +28,12 @@ struct SignUpView: View {
                 Spacer()
                 Spacer()
                 
-                Text(isEnglish ? "Sign Up" : "Đăng ký")
+                Text("Sign Up")
                     .font(.system(size: 40))
                     .bold()
+                
+                Text(alert)
+                    .foregroundColor(signUpSuccess ? Color("PrimaryColor") : .red)
                 
                 Group {
                     TextField("Email", text: $email)
@@ -38,18 +41,30 @@ struct SignUpView: View {
                         .background(.thinMaterial)
                         .cornerRadius(10)
                         .textInputAutocapitalization(.never)
+                        .onTapGesture {
+                            // Clear the alert when the Password TextField is tapped
+                            alert = ""
+                        }
                     
-                    SecureField(isEnglish ? "Password" : "Mật khẩu", text: $password)
+                    SecureField("Password", text: $password)
                         .padding()
                         .background(.thinMaterial)
                         .cornerRadius(10)
+                        .onTapGesture {
+                            // Clear the alert when the Password TextField is tapped
+                            alert = ""
+                        }
                     
-                    SecureField(isEnglish ? "Confirm Password" : "Nhập lại mật khẩu", text: $passwordConfirmation)
+                    SecureField("Confirm Password", text: $passwordConfirmation)
                         .padding()
                         .background(.thinMaterial)
                         .cornerRadius(10)
                         .border(Color.red, width: passwordConfirmation != password ? 1 : 0)
                         .padding(.bottom, 30)
+                        .onTapGesture {
+                            // Clear the alert when the Password TextField is tapped
+                            alert = ""
+                        }
                 }
                 .padding(.horizontal, 10)
                 
@@ -57,7 +72,7 @@ struct SignUpView: View {
                 Button(action: {
                     signUp()
                 }) {
-                    Text(isEnglish ? "Sign Up" : "Đăng ký")
+                    Text("Sign Up")
                         .bold()
                         .foregroundColor(Color.white)
                         .frame(width: 300, height: 50)
@@ -67,12 +82,12 @@ struct SignUpView: View {
                 }
                 
                 HStack{
-                    Text(isEnglish ? "Already have an account?" : "Bạn đã có tài khoản?")
-                    NavigationLink(destination: SignInView(isEnglish: $isEnglish, userViewModel: $userViewModel), isActive: $isShowingSignInView){
+                    Text("Already have an account?")
+                    NavigationLink(destination: SignInView(userViewModel: $userViewModel), isActive: $isShowingSignInView){
                         Button {
                             isShowingSignInView = true
                         } label: {
-                            Text(isEnglish ? "Sign In" : "Đăng nhập")
+                            Text("Sign In")
                                 .foregroundColor(.blue)
                                 .bold()
                                 .underline()
@@ -97,11 +112,13 @@ struct SignUpView: View {
     func signUp() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
-                print(error?.localizedDescription ?? "")
+//                print(error?.localizedDescription ?? "")
+                alert = error?.localizedDescription ?? ""
                 signUpSuccess = false
             } else {
                 self.userViewModel.addNewUserData(email: email)
                 signUpSuccess = true
+                alert = "Successfully Sign Up"
             }
         }
     }
@@ -109,6 +126,6 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(isEnglish: .constant(false), userViewModel: .constant(UserViewModel()))
+        SignUpView(userViewModel: .constant(UserViewModel()))
     }
 }

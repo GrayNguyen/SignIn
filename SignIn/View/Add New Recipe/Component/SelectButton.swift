@@ -23,11 +23,12 @@ struct SelectButton: View {
                         selection = element
                     }) {
                         Label(element, systemImage: selection == element ? "checkmark" : "")
+                            .foregroundColor(Color("ForegroundColor"))
                     }
                 }
             } label: {
                 Label(selection, systemImage: "chevron.down")
-                    .foregroundColor(Color.black.opacity(0.6))
+                    .foregroundColor(Color("ForegroundColor"))
                     .bold()
             }
             

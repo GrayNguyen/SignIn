@@ -8,27 +8,76 @@
 import SwiftUI
 
 struct FavouriteView: View {
+    @Binding var user: User
+    @Binding var recipeViewModel: RecipeViewModel
+    var userViewModel: UserViewModel
+    @Binding var viewedRecipes: [Recipe]
+    @Binding var recipes: [Recipe]
+    @State private var favouritedRecipes: [Recipe] = []
+    
     var body: some View {
-        VStack{
-            Spacer()
-            
-            HStack{
-                Spacer()
-                
-                Text("Favourite")
-                
-                Spacer()
+        NavigationView {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    
+                    HStack{
+                        Text("My Recipe")
+                            .font(.system(size: 26))
+                            .bold()
+                            .padding(.bottom, 20)
+                        
+                        Spacer()
+                    }
+                    .padding(.horizontal, 15)
+                    
+                    HStack(alignment: .top, spacing: 5){
+                        VStack(alignment: .leading){
+                            Text("My Recipe")
+                                .font(.system(size: 20))
+                                .bold()
+                                .padding(.bottom, 20)
+                                .opacity(0)
+                            
+                            ForEach(0..<favouritedRecipes.count, id: \.self) {index in
+                                if index % 2 == 0 {
+                                    NavigationLink(destination: RecipeInfo(recipe: favouritedRecipes[index], recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                        GeneralRecipeView(recipe: favouritedRecipes[index], userViewModel: userViewModel, size: 150.0)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        VStack {
+                            ForEach(0..<favouritedRecipes.count, id: \.self) { index in
+                                if index % 2 == 1 {
+                                    NavigationLink(destination: RecipeInfo(recipe: favouritedRecipes[index], recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                        GeneralRecipeView(recipe: favouritedRecipes[index], userViewModel: userViewModel, size: 150.0)
+                                    }
+                                }
+                            }
+                        }
+                        .frame(width: 150.0)
+                    }
+                    .padding(.top, 20)
+                }
+                .padding(.horizontal, 15)
             }
-            
-            Spacer()
-        }
-        .background(Color.gray.opacity(0.2))
+            .background(Color.gray.opacity(0.2))
+            .onAppear {
+                favouritedRecipes = recipeViewModel.recipes.filter { recipe in
+                    if let recipeDocumentID = recipe.documentID {
+                        return user.favourite.contains(recipeDocumentID)
+                    }
+                    return false
+                }
+            }
         .navigationBarBackButtonHidden(true)
+        }
     }
 }
 
 struct FavouriteView_Previews: PreviewProvider {
     static var previews: some View {
-        FavouriteView()
+        FavouriteView(user: .constant(User(firstName: "", email: "", favourite: [])), recipeViewModel: .constant(RecipeViewModel()), userViewModel: UserViewModel(), viewedRecipes: .constant([]), recipes: .constant([]))
     }
 }

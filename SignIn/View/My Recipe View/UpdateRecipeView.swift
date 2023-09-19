@@ -1,22 +1,18 @@
-/*
-  RMIT University Vietnam
-  Course: COSC2659 iOS Development
-  Semester: 2023B
-  Assessment: Assignment 3
-  Author: Nguyen Vi Phi Long
-  ID: s3904632
-  Created  date: 06/09/2023
-  Last modified: 11/09/2023)
-  Acknowledgement:
-*/
+//
+//  UpdateRecipeView.swift
+//  SignIn
+//
+//  Created by Gia Hân on 19/09/2023.
+//
 
 import SwiftUI
 
-struct AddRecipeView: View {
+struct UpdateRecipeView: View {
     @Environment(\.dismiss) var dismiss
-    var user: User
+    @Binding var recipe: Recipe
     @Binding var recipes: [Recipe]
     @Binding var recipeViewModel: RecipeViewModel
+    @State private var alertMessage: String = ""
     
     let catergoryArr: [String] = ["None", "Breakfast", "Lunch", "Dinner", "Dessert", "Smoothies"]
     
@@ -26,20 +22,8 @@ struct AddRecipeView: View {
     @State private var makingTime: Int = 0
     @State private var ingredients: [String] = [""]
     @State private var instructions: [String] = [""]
-    @State private var selectedImage: UIImage? = nil
     @State private var isShowingSuccess: Bool = false
-    @State private var recipe: Recipe = Recipe(
-        name: "",
-        makingTime: 0,
-        category: "None",
-        description: "",
-        ingredients: [],
-        instructions: [],
-        review: [],
-        userDocumentID: "",
-        documentID: ""
-    )
-    @State private var isPostingRecipe: Bool = false
+    @State private var isUpdatingRecipe: Bool = false
     
     var body: some View {
         ZStack {
@@ -56,7 +40,7 @@ struct AddRecipeView: View {
 
                     Spacer()
 
-                    Text("New Recipe")
+                    Text("Update Recipe")
                         .font(.system(size: 32))
                         .padding(.top, 20)
 
@@ -80,7 +64,6 @@ struct AddRecipeView: View {
                             Text("Recipe Name")
                                 .font(.system(size: 20))
                                 .foregroundColor(.secondary)
-                            // TextField("", text: recipe.name == nil ? recipe.name : "" )
                             
                             TextField("Recipe Name", text: $recipeName)
                                 .padding()
@@ -195,24 +178,12 @@ struct AddRecipeView: View {
                                     }
                                 }
                             }
-                            
-                            VStack(spacing: 10){
-                                HStack {
-                                    Text("Image")
-                                        .font(.system(size: 20))
-                                    .foregroundColor(.secondary)
-                                    
-                                    Spacer()
-                                }
-                                
-                                UploadImage(selectedImage: $selectedImage)
-                            }
                         }
                         
                         Button {
-                            handleAddButton()
+                            handleUpdateButton()
                         } label: {
-                            Text("Add")
+                            Text("Update")
                                 .bold()
                                 .foregroundColor(Color.white)
                                 .frame(width: 300, height: 50)
@@ -230,66 +201,65 @@ struct AddRecipeView: View {
             }
             .alert(isPresented: $isShowingSuccess) {
                 Alert(
-                    title: Text("Successful"),
-                    message: Text("You have successfully added a new recipe."),
+                    title: Text("Update Recipe"),
+                    message: Text(alertMessage),
                     dismissButton: .default(Text("OK")) {
                         dismiss()
                     }
                 )
             }
+            .onAppear{
+                recipeName = recipe.name ?? ""
+                description = recipe.description ?? ""
+                category = recipe.category ?? "None"
+                makingTime = recipe.makingTime ?? 0
+                ingredients = recipe.ingredients
+                instructions = recipe.instructions
+            }
             
-            if isPostingRecipe {
+            if isUpdatingRecipe {
                 LoadingScreen() // Display loading screen
             }
         }
         .background(Color.gray.opacity(0.2))
+        .navigationBarBackButtonHidden(true)
     }
     
-    func handleAddButton() {
-        isPostingRecipe = true
-        
-        recipeViewModel.uploadPhoto(selectedImage: selectedImage) { path in
-            if let path = path {
-                recipe.name = recipeName
-                recipe.image = path
-                recipe.description = description
-                recipe.category = category
-                recipe.makingTime = makingTime
-                recipe.ingredients = ingredients
-                recipe.instructions = instructions
-                recipe.userDocumentID = user.documentID ?? ""
-                
-                recipeViewModel.addNewRecipe(recipe: recipe) { success in
-                    isPostingRecipe = false
-                    if success {
-                        isShowingSuccess = true
-                        
-                        // add the new recipe into the array
-                        recipes.append(recipe)
-                    } else {
-                        
-                    }
+    func handleUpdateButton() {
+        isUpdatingRecipe = true
+
+        // Update the properties of the existing recipe
+        recipe.name = recipeName
+        recipe.description = description
+        recipe.category = category
+        recipe.makingTime = makingTime
+        recipe.ingredients = ingredients
+        recipe.instructions = instructions
+
+        // Pass the updated recipe to the view model's updateRecipe function
+        recipeViewModel.updateRecipe(recipe: recipe) { result in
+            isUpdatingRecipe = false
+
+            switch result {
+            case .success(let message):
+                isShowingSuccess = true
+                alertMessage = message
+
+                // Update the local copy of the recipe in the recipes array
+                if let index = recipes.firstIndex(where: { $0.id == recipe.id }) {
+                    recipes[index] = recipe
                 }
+
+            case .failure(let error):
+                // Handle the error and show an alert with an error message
+                alertMessage = "Error updating recipe: \(error.localizedDescription)"
             }
         }
     }
 }
 
-struct AddRecipeView_Previews: PreviewProvider {
+struct UpdateRecipeView_Previews: PreviewProvider {
     static var previews: some View {
-        AddRecipeView(user: User(
-            firstName: "",
-            lastName: "",
-            dob: "",
-            gender: "",
-            email: "",
-            phone: "",
-            address: "",
-            favourite: [],
-            avatar: "",
-            documentID: "123456"
-        ),
-        recipes: .constant([]),
-        recipeViewModel: .constant(RecipeViewModel()))
+        UpdateRecipeView(recipe: .constant(Recipe(id: "9C4438DB-F970-4DB5-A2D4-41628CA67F0B", name: Optional("Air fryer chicken breast salad"), image: Optional("images/2022D512_AIRFRYER_SALAD-768x960.jpg"), makingTime: Optional(20), category: Optional("Dinner"), description: Optional("Chicken is an air fryer’s best friend – it cooks it quickly, evenly and without drying it out. This simple recipe for spiced chicken breast is served with a honey mustard salad, but you can cook the breasts and serve them however you like."), ingredients: ["2 skinless free-range chicken breasts", "Juice 1 lemon", "1 tbsp olive oil", "1 tbsp smoked paprika", "1 tsp sea salt", "1 tsp freshly ground black pepper", "1 tsp cayenne pepper", "½ tsp dried oregano"], instructions: ["Put each chicken breast between 2 sheets of baking paper and bash with a rolling pin until evenly flat all over (they don’t have to be super-thin, just the same thickness throughout). Use a fork to prick lots of little holes in the chicken, then put them in a dish and coat with the lemon juice and olive oil.", "Heat the air fryer to 190°C. Mix the paprika, salt, pepper, cayenne and oregano together, then massage the mixture all over the chicken breasts, ensuring an even, liberal coverage. Put the chicken in the air fryer and cook for 16 minutes, turning halfway.", "While the chicken cooks, put the honey, mustard, oil, vinegar and garlic in a clean jam jar, season with a generous pinch of salt and pepper and shake to create a dressing. Season the tomatoes with a pinch of salt.", "To serve, toss the lettuce in some of the dressing to coat, then divide between bowls. Arrange the tomatoes and capers on top. Slice the chicken breasts and put them in the centre, then drizzle over the remaining dressing."], review: [], userDocumentID: "L56IcwjgJP1mKaN4wdI3", documentID: Optional("wYMAnwGqv0zGhmOFyEul"))), recipes: .constant([]), recipeViewModel: .constant(RecipeViewModel()))
     }
 }

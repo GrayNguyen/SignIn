@@ -15,7 +15,6 @@ import SwiftUI
 struct AppView: View {
     var email: String
     @Binding var userViewModel: UserViewModel
-    @Binding var isEnglish: Bool
     @State private var isShowingAddNewRecipe: Bool = false
     @State private var selectedTab: String = "house.fill"
     @State private var userData: User? = nil
@@ -31,24 +30,25 @@ struct AppView: View {
         avatar: "",
         documentID: ""
     )
-    @State private var recipeViewModel: RecipeViewModel = RecipeViewModel()
-    @State private var recipes = [Recipe]()
+    @State private var recipeViewModel = RecipeViewModel()
+    @State private var recipes: [Recipe] = []
+    @State private var viewedRecipes: [Recipe] = []
     
     var body: some View {
         VStack {
             Group {
                 switch selectedTab {
                 case "house.fill":
-                    HomeView(user: user, recipes: recipes, userModelView: userViewModel,isEnglish: isEnglish)
+                    HomeView(user: $user, recipes: $recipes, recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes)
                     
                 case "heart.fill":
-                    FavouriteView()
+                    FavouriteView(user: $user, recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, recipes: $recipes)
                     
                 case "list.clipboard.fill":
-                    MyRecipeView(recipes: recipes, userViewModel: userViewModel, isEnglish: isEnglish, user: user)
+                    MyRecipeView(recipes: $recipeViewModel.recipes, recipeViewModel: $recipeViewModel,userViewModel: userViewModel)
                     
                 default:
-                    UserView(user: $user, userViewModel: $userViewModel, isEnglish: $isEnglish)
+                    UserView(user: $user, userViewModel: $userViewModel)
                 }
             }
             .transition(.opacity)
@@ -64,13 +64,13 @@ struct AppView: View {
             recipes = recipeViewModel.recipes
         }
         .sheet(isPresented: $isShowingAddNewRecipe){
-            AddRecipeView(isEnglish: isEnglish, user: user, recipeViewModel: $recipeViewModel)
+            AddRecipeView(user: user, recipes: $recipes, recipeViewModel: $recipeViewModel)
         }
     }
 }
 
 struct AppView_Previews: PreviewProvider {
     static var previews: some View {
-        AppView(email: "", userViewModel: .constant(UserViewModel()), isEnglish: .constant(false))
+        AppView(email: "", userViewModel: .constant(UserViewModel()))
     }
 }

@@ -13,7 +13,6 @@
 import SwiftUI
 
 struct IngredientPicker: View {
-    var isEnglish: Bool
     @Binding var selection: String
     
     var body: some View {
@@ -21,10 +20,10 @@ struct IngredientPicker: View {
             Menu {
                 ForEach(Ingredient.ingredients) { ingredient in
                     Button {
-                        selection = isEnglish ? ingredient.name.en : ingredient.name.vi
+                        selection = ingredient.name.en
                     } label: {
                         HStack{
-                            Text(isEnglish ? ingredient.name.en : ingredient.name.vi)
+                            Text(ingredient.name.en)
                             
                             Image(ingredient.image)
                                 .resizable()
@@ -48,6 +47,6 @@ struct IngredientPicker: View {
 
 struct IngredientPicker_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientPicker(isEnglish: false,selection: .constant(""))
+        IngredientPicker(selection: .constant(""))
     }
 }

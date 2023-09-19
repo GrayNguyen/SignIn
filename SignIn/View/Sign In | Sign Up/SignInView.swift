@@ -14,13 +14,13 @@ import SwiftUI
 import Firebase
 
 struct SignInView: View {
-    @Binding var isEnglish: Bool
     @Binding var userViewModel: UserViewModel
     @State var email = ""
     @State var password = ""
     @State var loginSuccess = false
     @State private var rememberMe: Bool = false
     @State private var isShowingSignUpView = false
+    @State private var alert: String = ""
 
     var body: some View {
         NavigationView {
@@ -29,10 +29,16 @@ struct SignInView: View {
                 Spacer()
                 Spacer()
                 
-                Text(isEnglish ? "Sign In" : "Đăng nhập")
-                    .foregroundColor(.black)
-                    .font(.system(size: 40))
-                    .bold()
+                VStack{
+                    Text("Sign In")
+                        .foregroundColor(.black)
+                        .font(.system(size: 40))
+                        .bold()
+                    
+                    Text(alert)
+                        .bold()
+                        .foregroundColor(.red)
+                }.padding(.top, 30)
                 
                 Spacer()
                 
@@ -42,12 +48,20 @@ struct SignInView: View {
                         .background(.thinMaterial)
                         .cornerRadius(10)
                         .textInputAutocapitalization(.never)
+                        .onTapGesture {
+                            // Clear the alert when the Password TextField is tapped
+                            alert = ""
+                        }
                     
-                    SecureField(isEnglish ? "Password" : "Mật khẩu", text: $password)
+                    SecureField("Password", text: $password)
                         .padding()
                         .background(.thinMaterial)
                         .cornerRadius(10)
                         .padding(.bottom, 30)
+                        .onTapGesture {
+                            // Clear the alert when the Password TextField is tapped
+                            alert = ""
+                        }
                 }
                 .padding(.horizontal, 10)
                 
@@ -55,7 +69,7 @@ struct SignInView: View {
                 Button(action: {
                     login()
                 }) {
-                    Text(isEnglish ? "Sign In" : "Đăng nhập")
+                    Text("Sign In")
                         .bold()
                         .foregroundColor(Color.white)
                         .frame(width: 300, height: 50)
@@ -64,17 +78,17 @@ struct SignInView: View {
                         .padding(.bottom, 50)
                 }
                 .background(
-                    NavigationLink("", destination: AppView(email: email, userViewModel: $userViewModel, isEnglish: $isEnglish), isActive: $loginSuccess)
+                    NavigationLink("", destination: AppView(email: email, userViewModel: $userViewModel), isActive: $loginSuccess)
                 )
                 
                 HStack{
-                    Text(isEnglish ? "You don't have an account?" : "Bạn chưa có tài khoản?")
+                    Text("You don't have an account?")
                         .foregroundColor(.black)
-                    NavigationLink(destination: SignUpView(isEnglish: $isEnglish, userViewModel: $userViewModel), isActive: $isShowingSignUpView){
+                    NavigationLink(destination: SignUpView(userViewModel: $userViewModel), isActive: $isShowingSignUpView){
                         Button {
                             isShowingSignUpView = true
                         } label: {
-                            Text(isEnglish ? "Sign Up" : "Đăng ký")
+                            Text("Sign Up")
                                 .foregroundColor(.blue)
                                 .bold()
                                 .underline()
@@ -84,6 +98,7 @@ struct SignInView: View {
                 
                 Spacer()
             }
+            .padding(.horizontal, 15)
             .background(Image("background")
                             .resizable()
                             .scaledToFill()
@@ -99,7 +114,8 @@ struct SignInView: View {
     func login() {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
-                print(error?.localizedDescription ?? "")
+//                print(error?.localizedDescription ?? "")
+                alert = error?.localizedDescription ?? ""
                 loginSuccess = false
             } else {
                 loginSuccess = true
@@ -110,6 +126,6 @@ struct SignInView: View {
 
 struct SignInViewView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView(isEnglish: .constant(false), userViewModel: .constant(UserViewModel()))
+        SignInView(userViewModel: .constant(UserViewModel()))
     }
 }

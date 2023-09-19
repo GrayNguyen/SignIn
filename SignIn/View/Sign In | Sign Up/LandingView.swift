@@ -14,7 +14,6 @@ import SwiftUI
 
 struct LandingView: View {
     @State private var userViewModel = UserViewModel()
-    @State private var isEnglish: Bool = false
     @State private var isShowingSignInView: Bool = false
     @State private var isShowingSignUpView: Bool = false
     
@@ -31,11 +30,11 @@ struct LandingView: View {
                 Spacer()
                 
                 VStack{
-                    NavigationLink(destination: SignUpView(isEnglish: $isEnglish, userViewModel: $userViewModel), isActive: $isShowingSignUpView){
+                    NavigationLink(destination: SignUpView(userViewModel: $userViewModel), isActive: $isShowingSignUpView){
                         Button {
                             isShowingSignUpView = true
-                        } label: {
-                            Text(isEnglish ? "Sign Up with myRecipe" : "Đăng ký tài khoản myRecipe")
+                        } label: {	
+                            Text("Sign Up with myRecipe")
                                 .bold()
                                 .foregroundColor(Color.white)
                                 .frame(width: 360, height: 50)
@@ -45,11 +44,11 @@ struct LandingView: View {
                         }
                     }
                     
-                    NavigationLink(destination: SignInView(isEnglish: $isEnglish, userViewModel: $userViewModel), isActive: $isShowingSignInView){
+                    NavigationLink(destination: SignInView(userViewModel: $userViewModel), isActive: $isShowingSignInView){
                         Button {
                             isShowingSignInView = true
                         } label: {
-                            Text(isEnglish ? "Sign in" : "Đăng nhập")
+                            Text("Sign in")
                                 .bold()
                                 .foregroundColor(Color.white)
                                 .frame(width: 360, height: 50)

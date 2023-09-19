@@ -12,7 +12,6 @@
 import SwiftUI
 
 struct CategoryButton: View {
-    var isEnglish: Bool
     var category: Category
     var width: CGFloat
     
@@ -25,7 +24,7 @@ struct CategoryButton: View {
                 
                 HStack{
                     Spacer()
-                    Text(isEnglish ? category.name.en : category.name.vi)
+                    Text(category.name.en)
                         .font(.system(size: 8))
                     Spacer()
                 }
@@ -47,6 +46,6 @@ struct CategoryButton: View {
 
 struct CategoryButton_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryButton(isEnglish: false, category: Category.categories[0], width: 180.0)
+        CategoryButton(category: Category.categories[0], width: 180.0)
     }
 }

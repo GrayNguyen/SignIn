@@ -63,9 +63,9 @@ class RecipeViewModel: ObservableObject {
             self.recipes = newRecipes
         }
     }
-
+    
     // Function to add a new recipe
-    func addNewRecipe(recipe: Recipe) {
+    func addNewRecipe(recipe: Recipe, completion: @escaping (Bool) -> Void) {
         db.collection("recipes").addDocument(data: [
             "name": recipe.name ?? "",
             "image": recipe.image ?? "",
@@ -76,29 +76,37 @@ class RecipeViewModel: ObservableObject {
             "instructions": recipe.instructions,
             "review": recipe.review,
             "userDocumentID": recipe.userDocumentID
-        ])
+        ]) { (error) in
+            if let error = error {
+                // Handle the error and call the completion handler with `false`
+                completion(false)
+            } else {
+                // Recipe added successfully, call the completion handler with `true`
+                completion(true)
+            }
+        }
     }
 
     // Function to delete a recipe
-    func deleteRecipe(recipe: Recipe) {
+    func deleteRecipe(recipe: Recipe, completion: @escaping (Result<String, Error>) -> Void) {
         guard let documentID = recipe.documentID else {
-            print("Invalid recipe document ID")
+            completion(.failure("Invalid recipe document ID" as! Error))
             return
         }
 
         db.collection("recipes").document(documentID).delete { error in
             if let error = error {
-                print("Error deleting recipe: \(error.localizedDescription)")
+                completion(.failure(error))
             } else {
-                print("Recipe deleted successfully")
+                completion(.success("Recipe deleted successfully"))
             }
         }
     }
 
     // Function to update a recipe
-    func updateRecipe(recipe: Recipe) {
+    func updateRecipe(recipe: Recipe, completion: @escaping (Result<String, Error>) -> Void) {
         guard let documentID = recipe.documentID else {
-            print("Invalid recipe document ID")
+            completion(.failure("Invalid recipe document ID" as! Error))
             return
         }
 
@@ -118,9 +126,9 @@ class RecipeViewModel: ObservableObject {
 
         recipeRef.setData(recipeData, merge: true) { error in
             if let error = error {
-                print("Error updating recipe data: \(error.localizedDescription)")
+                completion(.failure(error))
             } else {
-                print("Recipe data updated successfully")
+                completion(.success("Recipe updated successfully"))
             }
         }
     }

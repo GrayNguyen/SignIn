@@ -13,12 +13,16 @@
 import SwiftUI
 
 struct HomeView: View {
-    var user: User
-    var recipes: [Recipe]
-    var userModelView: UserViewModel
-    var isEnglish: Bool
+    @Binding var user: User
+    @Binding var recipes: [Recipe]
+    @Binding var recipeViewModel: RecipeViewModel
+    var userViewModel: UserViewModel
     @State private var isShowingRecommendationList: Bool = false
     @State private var isShowingROTWList: Bool = false
+    @State private var recommendationRecipes: [Recipe] = []
+    @State private var recipesOfTheWeek: [Recipe] = []
+    @State private var newestRecipes: [Recipe] = []
+    @Binding var viewedRecipes: [Recipe]
     
     var body: some View {
         NavigationView {
@@ -28,12 +32,12 @@ struct HomeView: View {
                         //MARK: Slogan
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
-                                Text(isEnglish ? "Hello \(user.firstName ?? "")" : "Xin chào \(user.firstName ?? "")")
+                                Text("Hello \(user.firstName ?? "")")
                                 
                                 Spacer()
                             }
                             
-                            Text(isEnglish ? "What would you like \nto cook today?" : "Hôm nay bạn muốn \nnấu món gì?")
+                            Text("What would you like \nto cook today?")
                                 .font(.system(size: 32))
                                 .bold()
                         }
@@ -41,22 +45,23 @@ struct HomeView: View {
                         
                         VStack(spacing: 40) {
                             //MARK: Search bar
-                            SearchBar(isEnglish: isEnglish)
+//                            SearchBar()
                             
                             VStack {
                                 //MARK: Categories
                                 HStack {
-                                    Text(isEnglish ? "Categories" : "Danh mục")
+                                    Text("Categories")
                                         .font(.system(size: 24))
                                         .bold()
                                     
                                     Spacer()
                                 }
+                                .padding(.top, 30)
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 15) {
                                         ForEach(Category.categories) { category in
-                                            CategoryButton(isEnglish: isEnglish, category: category, width: 100)
+                                            CategoryButton(category: category, width: 100)
                                         }
                                     }
                                     .padding(.leading, 1)
@@ -64,40 +69,10 @@ struct HomeView: View {
                                 }
                             }
                             
-                            //MARK: Recommendation
-                            VStack(spacing: 10) {
-                                HStack {
-                                    Text(isEnglish ? "Recommendation" : "Gợi ý")
-                                        .font(.system(size: 24))
-                                        .bold()
-                                    
-                                    Spacer()
-                                    
-                                    Button {
-                                        isShowingRecommendationList = true
-                                    } label: {
-                                        Text(isEnglish ? "See all" : "Xem thêm")
-                                            .foregroundColor(Color("PrimaryColor"))
-                                            .bold()
-                                    }
-                                    .background{
-                                        NavigationLink("", destination: RecipeList(recipes: recipes, englishTitle: "Recommendation", vietnameseTitle: "Gợi ý", userViewModel: userModelView, isEnglish: isEnglish), isActive: $isShowingRecommendationList)
-                                    }
-                                }
-                                
-                                ScrollView(.horizontal, showsIndicators: false){
-                                    HStack{
-                                        ForEach(recipes) {recipe in
-                                            GeneralRecipeView(recipe: recipe, userViewModel: userModelView, size: 200.0)
-                                        }
-                                    }
-                                }
-                            }
-                            
                             //MARK: Recipes of the week
                             VStack(spacing: 10) {
                                 HStack {
-                                    Text(isEnglish ? "Recipes Of The Week" : "Món ăn của tuần")
+                                    Text("Newest")
                                         .font(.system(size: 24))
                                         .bold()
                                     
@@ -106,39 +81,118 @@ struct HomeView: View {
                                     Button {
                                         isShowingROTWList = true
                                     } label: {
-                                        Text(isEnglish ? "See all" : "Xem thêm")
+                                        Text("See all")
                                             .foregroundColor(Color("PrimaryColor"))
                                             .bold()
                                     }
                                     .background{
-                                        NavigationLink("", destination: RecipeList(recipes: recipes, englishTitle: "Recipe of The Week", vietnameseTitle: "Món ăn của tuần", userViewModel: userModelView, isEnglish: isEnglish), isActive: $isShowingROTWList)
+                                        NavigationLink("", destination: RecipeList(recipes: $recipes, title: "Recipe of The Week", recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingROTWList)
                                     }
                                 }
                                 
                                 ScrollView(.horizontal, showsIndicators: false){
                                     HStack{
-                                        ForEach(recipes) {recipe in
-                                            GeneralRecipeView(recipe: recipe, userViewModel: userModelView, size: 200.0)
+                                        ForEach(newestRecipes) {recipe in
+                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipes: $recipes,recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                                GeneralRecipeView(recipe: recipe, userViewModel: userViewModel, size: 200.0)
+                                            }
                                         }
                                     }
                                 }
                             }
                             
-                            //MARK: Recently viewed
+                            //MARK: Recommendation
                             VStack(spacing: 10) {
                                 HStack {
-                                    Text(isEnglish ? "History Viewed" : "Đã xem")
+                                    Text("Recommendation")
                                         .font(.system(size: 24))
                                         .bold()
                                     
                                     Spacer()
                                     
                                     Button {
-                                        
+                                        isShowingRecommendationList = true
                                     } label: {
-                                        Text(isEnglish ? "See all" : "Xem thêm")
+                                        Text("See all")
                                             .foregroundColor(Color("PrimaryColor"))
                                             .bold()
+                                    }
+                                    .background{
+                                        NavigationLink("", destination: RecipeList(recipes: $recipes, title: "Recommendation", recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingRecommendationList)
+                                    }
+                                }
+                                
+                                ScrollView(.horizontal, showsIndicators: false){
+                                    HStack{
+                                        ForEach(recommendationRecipes) {recipe in
+                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipes: $recipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                                GeneralRecipeView(recipe: recipe, userViewModel: userViewModel, size: 200.0)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            //MARK: Recipes of the week
+                            VStack(spacing: 10) {
+                                HStack {
+                                    Text("Recipes Of The Week")
+                                        .font(.system(size: 24))
+                                        .bold()
+                                    
+                                    Spacer()
+                                    
+                                    Button {
+                                        isShowingROTWList = true
+                                    } label: {
+                                        Text("See all")
+                                            .foregroundColor(Color("PrimaryColor"))
+                                            .bold()
+                                    }
+                                    .background{
+                                        NavigationLink("", destination: RecipeList(recipes: $recipes, title: "Recipe of The Week", recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingROTWList)
+                                    }
+                                }
+                                
+                                ScrollView(.horizontal, showsIndicators: false){
+                                    HStack{
+                                        ForEach(recipesOfTheWeek) {recipe in
+                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipes: $recipes,recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                                GeneralRecipeView(recipe: recipe, userViewModel: userViewModel, size: 200.0)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            //MARK: Recently Viewed
+                            VStack(spacing: 10) {
+                                HStack {
+                                    Text("Recently Viewed")
+                                        .font(.system(size: 24))
+                                        .bold()
+                                    
+                                    Spacer()
+                                    
+                                    Button {
+                                        isShowingRecommendationList = true
+                                    } label: {
+                                        Text("See all")
+                                            .foregroundColor(Color("PrimaryColor"))
+                                            .bold()
+                                    }
+                                    .background{
+                                        NavigationLink("", destination: RecipeList(recipes: $recipes, title: "Recommendation", recipeViewModel: $recipeViewModel, userViewModel: userViewModel, viewedRecipes: $viewedRecipes, user: $user), isActive: $isShowingRecommendationList)
+                                    }
+                                }
+                                
+                                ScrollView(.horizontal, showsIndicators: false){
+                                    HStack{
+                                        ForEach(viewedRecipes) {recipe in
+                                            NavigationLink(destination: RecipeInfo(recipe: recipe, recipes: $viewedRecipes, recipeViewModel: $recipeViewModel, viewedRecipes: $viewedRecipes, user: $user)) {
+                                                GeneralRecipeView(recipe: recipe, userViewModel: userViewModel, size: 200.0)
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -148,6 +202,19 @@ struct HomeView: View {
                 }
             }
             .background(Color.gray.opacity(0.2))
+            .onAppear{
+                recipes = recipeViewModel.recipes
+                
+                //get the newest ones
+                newestRecipes = Array(recipes.suffix(10))
+
+                // Randomly select 10 more recipes for recommendations
+                var remainingRecipes = Array(recipes.dropLast(10))
+                recommendationRecipes = Array(recipes.shuffled().prefix(10))
+
+                // Set recipesOfTheWeek to a subset of allRecipes (you can adjust this logic as needed)
+                recipesOfTheWeek = Array(recipes.prefix(10))
+            }
         }
         .navigationBarBackButtonHidden(true)
     }
@@ -155,7 +222,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(user: User(
+        HomeView(user: .constant(User(
             firstName: "",
             lastName: "",
             dob: "",
@@ -166,9 +233,10 @@ struct HomeView_Previews: PreviewProvider {
             favourite: [],
             avatar: "",
             documentID: ""
-        ),
-        recipes: [],
-        userModelView: UserViewModel(),
-        isEnglish: true)
+        )),
+                 recipes: .constant([]),
+                 recipeViewModel: .constant(RecipeViewModel()),
+                 userViewModel: UserViewModel(),
+                 viewedRecipes: .constant([]))
     }
 }
